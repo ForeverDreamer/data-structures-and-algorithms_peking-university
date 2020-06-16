@@ -1,0 +1,33 @@
+//第3题
+
+1.User表，用户信息
+  `user_id` INT NOT NULL AUTO_INCREMENT,          // 自增长id
+  `cell_phone` VARCHAR(20)  NOT NULL UNIQUE,      // 手机号
+  `user_name` VARCHAR(50) NOT NULL,               // 用户名
+  `reg_time` DATETIME NOT NULL,                   // 注册时间
+  `last_login` DATETIME NULL,                     // 最后登录时间
+  `login_ip` VARCHAR(50) NULL,                    // 登录ip
+
+
+2.Post表，发帖信息
+  `post_id` INT NOT NULL AUTO_INCREMENT,          // 自增长id
+  `post_text` TEXT NOT NULL,                      // 帖子文本内容
+  `poster` VARCHAR(20) NOT NULL,                  // 发帖人手机号
+  foreign key (cell_phone) references User(cell_phone) on delete cascade on update cascade
+
+
+3.follow表，关注信息
+  `follow_id` INT NOT NULL AUTO_INCREMENT,        // 自增长id
+  'follow_subject' VARCHAR(20) NOT NULL,          // 关注对象手机号
+  `follow_time` DATETIME NOT NULL,                // 关注时间
+  foreign key (follow_subject) references User(cell_phone) on delete cascade on update cascade
+
+
+4.comment表，评论信息
+  `comment_id` INT NOT NULL AUTO_INCREMENT,       // 自增长id
+  `comment_text` TEXT NOT NULL,                   // 评论文本内容
+  `parent_comment` INT NOT NULL,                  // 上级评论的id
+  `commenter` VARCHAR(20) NOT NULL,               // 评论人手机号
+  `post_id` INT NOT NULL,                         // 评论的帖子id
+  foreign key (post_id) references Post(post_id) on delete cascade on update cascade
+  foreign key (parent_comment) references Post(comment_id) on delete cascade on update cascade
