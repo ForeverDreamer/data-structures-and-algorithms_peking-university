@@ -18,8 +18,10 @@
 
 3.follow表，关注信息
   `follow_id` INT NOT NULL AUTO_INCREMENT,        // 自增长id
+  'follower' VARCHAR(20) NOT NULL,                // 粉丝手机号
   'follow_subject' VARCHAR(20) NOT NULL,          // 关注对象手机号
   `follow_time` DATETIME NOT NULL,                // 关注时间
+  foreign key (follower) references User(cell_phone) on delete cascade on update cascade
   foreign key (follow_subject) references User(cell_phone) on delete cascade on update cascade
 
 
