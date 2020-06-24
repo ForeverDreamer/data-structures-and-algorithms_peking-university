@@ -1,12 +1,12 @@
 """模拟主程序"""
 from print_task.printer import Printer
 from print_task.task import Task
-from queue import Queue
+from my_queue import MyQueue
 
 
 def simulation(seconds, print_speed):
     printer = Printer(print_speed)
-    print_queue = Queue()
+    print_queue = MyQueue()
     wait_time_list = []
 
     for current_second in range(seconds):

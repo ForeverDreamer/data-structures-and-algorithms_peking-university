@@ -1,9 +1,9 @@
 """{2}--309队列的应用：热土豆7m52s"""
-from queue import Queue
+from my_queue import MyQueue
 
 
 def hot_potato(name_list, times):
-    name_queue = Queue()
+    name_queue = MyQueue()
     for name in name_list:
         name_queue.enqueue(name)
     while name_queue.size() > 1:

@@ -1,7 +1,7 @@
 """{1}--308队列抽象数据类型及Python实现10m01s"""
 
 
-class Queue:
+class MyQueue:
     def __init__(self):
         self._items = []
 
