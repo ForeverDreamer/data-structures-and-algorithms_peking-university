@@ -21,6 +21,14 @@ def parenthese_matcher1(symbol_string):
 
 
 def matches(open_symbol, close_symbol):
+    # if open_symbol == '(':
+    #     return True if close_symbol == ')' else False
+    # elif open_symbol == '[':
+    #     return True if close_symbol == ']' else False
+    # elif open_symbol == '{':
+    #     return True if close_symbol == '}' else False
+    # else:
+    #     raise ValueError('invalid symbol string!')
     open_symbols = '([{'
     close_symbols = ')]}'
     return open_symbols.index(open_symbol) == close_symbols.index(close_symbol)

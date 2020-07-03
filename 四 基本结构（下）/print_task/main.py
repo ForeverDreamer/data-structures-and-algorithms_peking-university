@@ -13,14 +13,11 @@ def simulation(seconds, print_speed):
         if Task.new_task():
             task = Task(current_second)
             print_queue.enqueue(task)
-        if printer.busy() or print_queue.is_empty():
-            pass
-        else:
+        if (not printer.busy()) and (not print_queue.is_empty()):
             new_task = print_queue.dequeue()
             wait_time_list.append(new_task.wait_time(current_second))
             printer.start_next(new_task)
         printer.tick()
-
     average_wait_time = sum(wait_time_list)/len(wait_time_list)
     print(f'Average wait {average_wait_time:6.2f}, {print_queue.size():3d} tasks remaining')
 
@@ -31,4 +28,4 @@ for i in range(20):
 print('\n===========================================\n')
 
 for i in range(20):
-    simulation(3600, 10)
+    simulation(36000, 10)

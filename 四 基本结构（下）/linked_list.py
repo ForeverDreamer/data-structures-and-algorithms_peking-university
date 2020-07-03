@@ -32,8 +32,31 @@ class UnorderedList:
     def __init__(self):
         self._head = None
 
+    def __str__(self):
+        next_node = self._head
+        datas = []
+        while next_node:
+            datas.append(next_node.data)
+
+        return f'OrderedList: {datas}'
+
+    @property
+    def head(self):
+        return self._head
+
     def empty(self):
         return self._head is None
+
+    def add_node_to_tail(self, new_node):
+        previous = None
+        current = self._head
+        while current:
+            previous = current
+            current = current.next
+        if previous is None:
+            self._head = new_node
+        else:
+            previous.next = new_node
 
     def add_node(self, data):
         new_node = Node(data)
@@ -43,7 +66,7 @@ class UnorderedList:
     def size(self):
         current = self._head
         count = 0
-        while current is not None:
+        while current:
             count += 1
             current = current.next
 
@@ -52,7 +75,7 @@ class UnorderedList:
     def search(self, data):
         current = self._head
         found = False
-        while current is not None and not found:
+        while current and not found:
             if current.data == data:
                 found = True
             else:
@@ -61,10 +84,10 @@ class UnorderedList:
         return found
 
     def remove(self, data):
-        current = self._head
         previous = None
+        current = self._head
         found = False
-        while not found and current is not None:
+        while current and not found:
             if current.data == data:
                 found = True
             else:
@@ -84,12 +107,36 @@ class OrderedList:
     def __init__(self):
         self._head = None
 
+    def __str__(self):
+        next_node = self._head
+        datas = []
+        while next_node:
+            datas.append(next_node.data)
+            next_node = next_node.next
+
+        return f'OrderedList: {datas}'
+
+    @property
+    def head(self):
+        return self._head
+
+    def add_node_to_tail(self, new_node):
+        previous = None
+        current = self._head
+        while current:
+            previous = current
+            current = current.next
+        if previous is None:
+            self._head = new_node
+        else:
+            previous.next = new_node
+
     def add(self, data):
         current = self._head
         previous = None
         stop = False
-        while current is not None and not stop:
-            if current.data > data:
+        while current and not stop:
+            if current.data >= data:
                 stop = True
             else:
                 previous = current
@@ -107,7 +154,7 @@ class OrderedList:
         current = self._head
         found = False
         stop = False
-        while current is not None and not found and not stop:
+        while current and not found and not stop:
             if current.data == data:
                 found = True
             else:

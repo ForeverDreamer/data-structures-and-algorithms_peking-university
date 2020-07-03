@@ -15,7 +15,7 @@ class Printer:
             self._current_task = None
 
     def busy(self):
-        return False if self._current_task is None else True
+        return True if self._current_task else False
 
     def start_next(self, new_task):
         self._current_task = new_task

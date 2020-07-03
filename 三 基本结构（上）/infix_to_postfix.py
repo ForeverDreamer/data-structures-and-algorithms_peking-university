@@ -29,4 +29,9 @@ def infix_to_postfix(infix_expression):
 
     while not operator_stack.is_empty():
         postfix_list.append(operator_stack.pop())
-    return ' '.join(postfix_list)
+    return ''.join(postfix_list)
+
+
+if __name__ == '__main__':
+    # AB*CD+EF*-/
+    print(infix_to_postfix('A * B / ( ( C + D ) - E * F )'))
