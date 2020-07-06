@@ -51,6 +51,6 @@ if __name__ == '__main__':
     r = BinaryTree('a')
     r.insert_left('b')
     r.insert_right('c')
-    r.right_child.root_val = 'hello'
+    r.right_child.root_data = 'hello'
     r.left_child.insert_right('d')
     print(r)
