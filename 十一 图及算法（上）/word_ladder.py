@@ -1,5 +1,4 @@
 """词梯问题"""
-from dag import Vertex
 from dag import Graph
 
 

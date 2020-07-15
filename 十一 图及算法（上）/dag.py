@@ -16,10 +16,13 @@ class Vertex:
 
     def __str__(self):
         # return str(self._key) + ' connected to: ' + str([neighbor.key for neighbor in self.connected_to])
+        neighbors = [neighbor.data for neighbor in self.connected_to]
+        return f'{self._data} connected to: {neighbors}'
         # neighbors = {neighbor.key: neighbor.data for neighbor in self.connected_to}
-        neighbors = [f'{neighbor.key},{neighbor.data},{neighbor.state},{neighbor.distance},{neighbor.previous}'
-                     for neighbor in self.connected_to]
-        return f'({self._key},{self._data},{self._state},{self._distance},{self._previous}) connected to: {neighbors}'
+        # return f'({self._key},{self._data}) connected to: {neighbors}'
+        # neighbors = [f'{neighbor.key},{neighbor.data},{neighbor.state},{neighbor.distance},{neighbor.previous}'
+        #              for neighbor in self.connected_to]
+        # return f'({self._key},{self._data},{self._state},{self._distance},{self._previous}) connected to: {neighbors}'
 
     # def __eq__(self, v):
     #     return v.data == self.data
@@ -82,13 +85,15 @@ class Graph:
         return iter(self._vertexs.values())
 
     def __str__(self):
-        rep_str = '\n'.join([str(v) for v in self])
+        sorted_data = [v for v in self]
+        sorted_data.sort(key=lambda v: v.data)
+        rep_str = '\n'.join([str(v) for v in sorted_data])
         return f'__str__访问\n{rep_str}'
 
     def __contains__(self, v):
         return v.key in self._vertexs
 
-    def add_vertex(self, data):
+    def add_vertex(self, data=None):
         Graph._num_of_vertex += 1
         self._vertexs[Graph._num_of_vertex] = Vertex(Graph._num_of_vertex, data)
         # self._num_of_vertex += 1
