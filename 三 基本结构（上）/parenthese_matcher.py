@@ -13,6 +13,7 @@ def parenthese_matcher1(symbol_string):
         else:
             if s.is_empty():
                 balance = False
+                break
             else:
                 s.pop()
         index += 1

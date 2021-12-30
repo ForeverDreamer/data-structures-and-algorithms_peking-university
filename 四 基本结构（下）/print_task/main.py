@@ -28,4 +28,4 @@ for i in range(20):
 print('\n===========================================\n')
 
 for i in range(20):
-    simulation(36000, 10)
+    simulation(3600, 10)

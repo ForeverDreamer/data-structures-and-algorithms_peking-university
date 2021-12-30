@@ -7,11 +7,11 @@ def do_math(op, op1, op2):
     if op == '*':
         result = op1 * op2
     elif op == '/':
-        result = op1 / op1
+        result = op1 / op2
     elif op == '+':
-        result = op1 + op1
+        result = op1 + op2
     elif op == '-':
-        result = op1 - op1
+        result = op1 - op2
     else:
         raise ValueError('非法操作符！')
 

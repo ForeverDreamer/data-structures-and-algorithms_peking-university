@@ -11,6 +11,7 @@ def base_converter(quotient, base):
         remainder_stack.push(remainder)
         quotient = quotient // base
 
+    print(remainder_stack._items)
     new_string = ''
     while not remainder_stack.is_empty():
         new_string = new_string + digits[remainder_stack.pop()]

@@ -33,10 +33,11 @@ class UnorderedList:
         self._head = None
 
     def __str__(self):
-        next_node = self._head
+        current = self._head
         datas = []
-        while next_node:
-            datas.append(next_node.data)
+        while current:
+            datas.append(current.data)
+            current = current.next
 
         return f'OrderedList: {datas}'
 
@@ -108,28 +109,17 @@ class OrderedList:
         self._head = None
 
     def __str__(self):
-        next_node = self._head
+        current = self._head
         datas = []
-        while next_node:
-            datas.append(next_node.data)
-            next_node = next_node.next
+        while current:
+            datas.append(current.data)
+            current = current.next
 
         return f'OrderedList: {datas}'
 
     @property
     def head(self):
         return self._head
-
-    def add_node_to_tail(self, new_node):
-        previous = None
-        current = self._head
-        while current:
-            previous = current
-            current = current.next
-        if previous is None:
-            self._head = new_node
-        else:
-            previous.next = new_node
 
     def add(self, data):
         current = self._head
@@ -164,3 +154,13 @@ class OrderedList:
                     current = current.next
 
         return found
+
+
+if __name__ == '__main__':
+    ul = UnorderedList()
+    ul.add_node_to_tail(Node(3))
+    print(ul)
+    ul.add_node_to_tail(Node(5))
+    print(ul)
+    ul.add_node_to_tail(Node(7))
+    print(ul)
