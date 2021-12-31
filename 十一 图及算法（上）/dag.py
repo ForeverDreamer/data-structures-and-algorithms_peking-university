@@ -4,10 +4,10 @@
 class Vertex:
     # _key = 1
 
-    def __init__(self, key, data):
+    def __init__(self, payload):
         # self._key = Vertex._key
-        self._key = key
-        self._data = data
+        self._key = payload['key']
+        self._data = payload['data']
         self._connected_to = {}
         # Vertex._key += 1
         self._state = 'unprocessed'
@@ -16,8 +16,8 @@ class Vertex:
 
     def __str__(self):
         # return str(self._key) + ' connected to: ' + str([neighbor.key for neighbor in self.connected_to])
-        neighbors = [neighbor.data for neighbor in self.connected_to]
-        return f'{self._data} connected to: {neighbors}'
+        keys = [neighbor.key for neighbor in self.connected_to]
+        return f'{self._key} connected to: {keys}'
         # neighbors = {neighbor.key: neighbor.data for neighbor in self.connected_to}
         # return f'({self._key},{self._data}) connected to: {neighbors}'
         # neighbors = [f'{neighbor.key},{neighbor.data},{neighbor.state},{neighbor.distance},{neighbor.previous}'
@@ -27,7 +27,7 @@ class Vertex:
     # def __eq__(self, v):
     #     return v.data == self.data
 
-    def add_neighbor(self, neighbor, weight=0):
+    def add_neighbor(self, neighbor, weight=1):
         self._connected_to[neighbor] = weight
 
     @property
@@ -75,14 +75,14 @@ class Vertex:
 
 
 class Graph:
-    _num_of_vertex = 0
+    # _num_of_vertex = 0
 
     def __init__(self):
         self._vertexs = {}
         # self._num_of_vertex = 0
 
     def __iter__(self):
-        return iter(self._vertexs.values())
+        return iter(self.vertexes)
 
     def __str__(self):
         sorted_data = [v for v in self]
@@ -90,32 +90,31 @@ class Graph:
         rep_str = '\n'.join([str(v) for v in sorted_data])
         return f'__str__访问\n{rep_str}'
 
-    def __contains__(self, v):
-        return v.key in self._vertexs
+    def __contains__(self, key):
+        return key in self._vertexs
 
-    def add_vertex(self, data=None):
-        Graph._num_of_vertex += 1
-        self._vertexs[Graph._num_of_vertex] = Vertex(Graph._num_of_vertex, data)
+    def add_vertex(self, payload):
+        # Graph._num_of_vertex += 1
+        key = payload['key']
+        self._vertexs[key] = Vertex(payload)
         # self._num_of_vertex += 1
-        return self._vertexs[Graph._num_of_vertex]
+        return self._vertexs[key]
 
-    def vertex(self, data):
-        for v in self.vertexes:
-            if data == v.data:
-                return v
+    def get_vertex(self, key):
+        return self._vertexs.get(key)
 
     @property
     def vertexes(self):
         return self._vertexs.values()
 
-    def add_edge(self, from_data, to_data, weight=0):
-        from_vertex = self.vertex(from_data)
-        to_vertex = self.vertex(to_data)
-        if not from_vertex:
-            from_vertex = self.add_vertex(from_data)
-        if not to_vertex:
-            to_vertex = self.add_vertex(to_data)
-        from_vertex.add_neighbor(to_vertex, weight)
+    def add_edge(self, f_payload, t_payload, weight=1):
+        f_vertex = self.get_vertex(f_payload['key'])
+        t_vertex = self.get_vertex(t_payload['key'])
+        if f_vertex is None:
+            f_vertex = self.add_vertex(f_payload)
+        if t_vertex is None:
+            t_vertex = self.add_vertex(t_payload)
+        f_vertex.add_neighbor(t_vertex, weight)
 
 
 if __name__ == '__main__':
@@ -124,16 +123,18 @@ if __name__ == '__main__':
     #     g.add_vertex(Vertex(d))
     # for vertex in g.vertexes:
     #     print(vertex)
-    g.add_edge(1, 2, 5)
-    g.add_edge(1, 6, 2)
-    g.add_edge(2, 3, 4)
-    g.add_edge(3, 4, 9)
-    g.add_edge(5, 6, 7)
-    g.add_edge(4, 6, 3)
-    g.add_edge(5, 1, 1)
-    g.add_edge(6, 5, 8)
-    g.add_edge(6, 3, 1)
+    g.add_edge({'key': 'v1', 'data': 1}, {'key': 'v2', 'data': 2}, 5)
+    g.add_edge({'key': 'v2', 'data': 2}, {'key': 'v3', 'data': 3})
+    g.add_edge({'key': 'v3', 'data': 3}, {'key': 'v4', 'data': 4}, 2)
+    g.add_edge({'key': 'v4', 'data': 4}, {'key': 'v5', 'data': 5})
+    g.add_edge({'key': 'v5', 'data': 5}, {'key': 'v6', 'data': 6})
+    g.add_edge({'key': 'v6', 'data': 6}, {'key': 'v7', 'data': 7})
+    g.add_edge({'key': 'v7', 'data': 7}, {'key': 'v8', 'data': 8})
+    g.add_edge({'key': 'v1', 'data': 1}, {'key': 'v3', 'data': 3})
+    g.add_edge({'key': 'v1', 'data': 1}, {'key': 'v4', 'data': 4})
+    g.add_edge({'key': 'v2', 'data': 2}, {'key': 'v5', 'data': 5})
+    g.add_edge({'key': 'v2', 'data': 2}, {'key': 'v6', 'data': 6})
     print(g)
-    print('迭代器访问')
-    for vertex in g:
-        print(vertex)
+    # print('迭代器访问')
+    # for vertex in g:
+    #     print(vertex)

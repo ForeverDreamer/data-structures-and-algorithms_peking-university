@@ -1,56 +1,77 @@
 """{4}--604树的链表实现6m57s"""
 
 
-class BinaryTree:
-    def __init__(self, data):
-        self._data = data
-        self._left_child = None
-        self._right_child = None
+class BTNode:
+    def __init__(self, v):
+        self._data = v
+        self._left = None
+        self._right = None
 
-    def insert_left(self, data):
-        if self._left_child is None:
-            self._left_child = BinaryTree(data)
+    def insert_left(self, v):
+        if self._left is None:
+            self._left = BTNode(v)
         else:
-            t = BinaryTree(data)
-            t._left_child = self._left_child
-            self._left_child = t
+            t = BTNode(v)
+            t._left = self._left
+            self._left = t
 
-    def insert_right(self, data):
-        if self._right_child is None:
-            self._right_child = BinaryTree(data)
+    def insert_right(self, v):
+        if self._right is None:
+            self._right = BTNode(v)
         else:
-            t = BinaryTree(data)
-            t._right_child = self._right_child
-            self._right_child = t
+            t = BTNode(v)
+            t._right = self._right
+            self._right = t
 
     def preorder(self):
         print(self._data)
-        if self._left_child:
-            self._left_child.preorder()
-        if self._right_child:
-            self._right_child.preorder()
+        if self._left:
+            self._left.preorder()
+        if self._right:
+            self._right.preorder()
+
+    def inorder(self):
+        if self._left:
+            self._left.preorder()
+        print(self._data)
+        if self._right:
+            self._right.preorder()
+
+    def postorder(self):
+        if self._left:
+            self._left.preorder()
+        if self._right:
+            self._right.preorder()
+        print(self._data)
 
     @property
-    def left_child(self):
-        return self._left_child
+    def left(self):
+        return self._left
 
     @property
-    def right_child(self):
-        return self._right_child
+    def right(self):
+        return self._right
 
     @property
-    def root_data(self):
+    def data(self):
         return self._data
 
-    @root_data.setter
-    def root_data(self, data):
-        self._data = data
+    @data.setter
+    def data(self, v):
+        self._data = v
 
 
 if __name__ == '__main__':
-    r = BinaryTree('a')
+    r = BTNode('a')
     r.insert_left('b')
-    r.insert_right('c')
-    r.right_child.root_data = 'hello'
-    r.left_child.insert_right('d')
-    print(r)
+    r.insert_left('c')
+    r.insert_left('d')
+    r.insert_right('e')
+    r.insert_right('f')
+    r.right.data = 'hello'
+    r.left.insert_right('g')
+    r.preorder()
+    print('-------------------------------')
+    r.inorder()
+    print('-------------------------------')
+    r.postorder()

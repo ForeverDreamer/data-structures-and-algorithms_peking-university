@@ -23,6 +23,13 @@ def bubble_sort2(item_list):
 
 
 def selection_sort(item_list):
+    # last = len(item_list) - 1
+    # while last > 0:
+    #     pos_of_max = 0
+    #     for pos in range(1, fill_slot+1):
+    #         if item_list[pos] > item_list[pos_of_max]:
+    #             pos_of_max = pos
+    #     item_list[fill_slot], item_list[pos_of_max] = item_list[pos_of_max], item_list[fill_slot]
     for fill_slot in range(len(item_list)-1, 0, -1):
         pos_of_max = 0
         for pos in range(1, fill_slot+1):
