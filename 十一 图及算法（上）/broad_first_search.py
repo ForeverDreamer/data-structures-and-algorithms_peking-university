@@ -11,23 +11,23 @@ def bfs(start):
     while vertex_queue.size() > 0:
         current = vertex_queue.dequeue()
         for nbr in current.connections:
-            if nbr.state == 'unprocessed':
-                nbr.state = 'processing'
+            if nbr.state == 'white':
+                nbr.state = 'gray'
                 nbr.distance = current.distance + 1
                 nbr.previous = current
                 vertex_queue.enqueue(nbr)
-        current.state = 'processed'
+        current.state = 'black'
 
 
 def traverse(dest):
     while dest.previous:
-        print(dest.data)
+        print(dest.key)
         dest = dest.previous
-    print(dest.data)
+    print(dest.key)
 
 
 if __name__ == '__main__':
     g = build_graph('words_bfs.txt')
     # print(g)
-    bfs(g.vertex('fool'))
-    traverse(g.vertex('sage'))
+    bfs(g.get_vertex('fool'))
+    traverse(g.get_vertex('sage'))

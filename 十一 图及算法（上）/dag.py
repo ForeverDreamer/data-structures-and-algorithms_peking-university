@@ -10,14 +10,14 @@ class Vertex:
         self._data = payload['data']
         self._connected_to = {}
         # Vertex._key += 1
-        self._state = 'unprocessed'
+        self._state = 'white'
         self._distance = 0
         self._previous = None
 
     def __str__(self):
         # return str(self._key) + ' connected to: ' + str([neighbor.key for neighbor in self.connected_to])
-        keys = [neighbor.key for neighbor in self.connected_to]
-        return f'{self._key} connected to: {keys}'
+        nbrs = [(neighbor.key, neighbor.data) for neighbor in self.connected_to]
+        return f'({self._key},{self.data}) connected to: {nbrs}'
         # neighbors = {neighbor.key: neighbor.data for neighbor in self.connected_to}
         # return f'({self._key},{self._data}) connected to: {neighbors}'
         # neighbors = [f'{neighbor.key},{neighbor.data},{neighbor.state},{neighbor.distance},{neighbor.previous}'
@@ -88,7 +88,7 @@ class Graph:
         sorted_data = [v for v in self]
         sorted_data.sort(key=lambda v: v.data)
         rep_str = '\n'.join([str(v) for v in sorted_data])
-        return f'__str__访问\n{rep_str}'
+        return f'__str__访问\n顶点数量：{self.size}\n{rep_str}'
 
     def __contains__(self, key):
         return key in self._vertexs
@@ -102,6 +102,10 @@ class Graph:
 
     def get_vertex(self, key):
         return self._vertexs.get(key)
+
+    @property
+    def size(self):
+        return len(self._vertexs)
 
     @property
     def vertexes(self):
