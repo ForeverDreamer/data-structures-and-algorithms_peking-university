@@ -45,10 +45,10 @@ class BinHeap:
 
     def sink_down(self, pos):
         while pos*2 <= self._current_size:
-            mc = self.min_child(pos)
-            if self._heap_list[pos] > self._heap_list[mc]:
-                self._heap_list[pos], self._heap_list[mc] = self._heap_list[mc], self._heap_list[pos]
-            pos = mc
+            mc_pos = self.min_child(pos)
+            if self._heap_list[pos] > self._heap_list[mc_pos]:
+                self._heap_list[pos], self._heap_list[mc_pos] = self._heap_list[mc_pos], self._heap_list[pos]
+            pos = mc_pos
 
     def del_min(self):
         min_val = self._heap_list[1]
@@ -56,7 +56,6 @@ class BinHeap:
         self._current_size -= 1
         self._heap_list.pop()
         self.sink_down(1)
-
         return min_val
 
     def build_heap(self, items):
