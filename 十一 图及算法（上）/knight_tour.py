@@ -61,8 +61,9 @@ def knight_tour(level, path, current, limit):
     current.state = 'gray'
     path.append(current)
     if level < limit:
-        # neighbors = list(current.connections)
-        neighbors = order_by_avail(current)
+        neighbors = list(current.connections)
+        # 按可选择走法升序排序，即先搜索四周，再搜索中间
+        # neighbors = order_by_avail(current)
         i = 0
         done = False
         while i < len(neighbors) and not done:

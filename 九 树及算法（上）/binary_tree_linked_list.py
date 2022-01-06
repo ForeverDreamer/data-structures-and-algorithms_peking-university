@@ -32,16 +32,16 @@ class BTNode:
 
     def inorder(self):
         if self._left:
-            self._left.preorder()
+            self._left.inorder()
         print(self._data)
         if self._right:
-            self._right.preorder()
+            self._right.inorder()
 
     def postorder(self):
         if self._left:
-            self._left.preorder()
+            self._left.postorder()
         if self._right:
-            self._right.preorder()
+            self._right.postorder()
         print(self._data)
 
     @property
@@ -75,3 +75,11 @@ if __name__ == '__main__':
     r.inorder()
     print('-------------------------------')
     r.postorder()
+
+#       a
+#      / \
+#     d   hello
+#    / \   \
+#   c   g    e
+#  /
+# b

@@ -36,35 +36,34 @@ def build_parse_tree(expression):
 operators = {'+': operator.add, '-': operator.sub, '*': operator.mul, '/': operator.truediv}
 
 
-def evaluate(parse_tree):
-    left = parse_tree.left
-    right = parse_tree.right
+def evaluate(node):
+    left = node.left
+    right = node.right
 
     if left and right:
-        fn = operators[parse_tree.data]
+        fn = operators[node.data]
         return fn(evaluate(left), evaluate(right))
     else:
-        return parse_tree.data
+        return node.data
 
 
-def print_exp(parse_tree):
+def print_exp(node):
     exp = ''
-    if parse_tree:
-        if parse_tree.left and parse_tree.right:
-            exp = '(' + print_exp(parse_tree.left)
-            exp += str(parse_tree.data)
-            exp += print_exp(parse_tree.right) + ')'
-        else:
-            exp += str(parse_tree.data)
+    if node.left and node.right:
+        exp = '(' + print_exp(node.left)
+        exp += str(node.data)
+        exp += print_exp(node.right) + ')'
+    else:
+        exp += str(node.data)
 
     return exp
 
 
 if __name__ == '__main__':
-    par_tree = build_parse_tree('(4+((5+8)/(7*3))')
-    par_tree.preorder()
-    print(print_exp(par_tree))
-    print(evaluate(par_tree))
+    r_node = build_parse_tree('(4+((5+8)/(7*3))')
+    r_node.preorder()
+    print(print_exp(r_node))
+    print(evaluate(r_node))
 
 #     +
 #   /   \
@@ -72,4 +71,4 @@ if __name__ == '__main__':
 #      /   \
 #     +     *
 #    / \    / \
-#   5   8  7  3
+#   5   8  7   3
