@@ -82,10 +82,10 @@ class Node:
         self._data = data
         self._left = left
         self._right = right
-        if self.has_left():
-            self._left._parent = self
-        if self.has_right():
-            self._right._parent = self
+        if left:
+            left.parent = self
+        if right:
+            right.parent = self
 
 
 class BinarySearchTree:
@@ -98,7 +98,8 @@ class BinarySearchTree:
 
     def __iter__(self):
         if self._root:
-            return self._root.__iter__()
+            return iter(self._root)
+            # return self._root.__iter__()
 
     def __setitem__(self, key, data):
         self.put(key, data)
@@ -153,11 +154,14 @@ class BinarySearchTree:
             return None
 
     def remove(self, node):
+        # 这个节点没有子节点
         if node.is_leaf():
             if node.is_left:
                 node.parent.left = None
             else:
                 node.parent.right = None
+        # 这个节点有1个子节点
+        # 这个节点有2个子节点
 
     def delete(self, key):
         if self.size == 0:

@@ -4,6 +4,14 @@ class HashTable:
         self._keys = [None] * self._size
         self._values = [None] * self._size
 
+    @property
+    def keys(self):
+        return self._keys
+
+    @property
+    def values(self):
+        return self._values
+
     def __getitem__(self, key):
         return self.get(key)
 
@@ -28,8 +36,10 @@ class HashTable:
                 next_hashvalue = self.rehash(hashvalue)
                 while self._keys[next_hashvalue] and self._keys[next_hashvalue] != key:
                     next_hashvalue = self.rehash(next_hashvalue)
+                # key已存在，更新value
                 if self._keys[next_hashvalue]:
                     self._values[next_hashvalue] = value
+                # key不存在，同时保存key和value
                 else:
                     self._keys[next_hashvalue] = key
                     self._values[next_hashvalue] = value
@@ -50,3 +60,23 @@ class HashTable:
                 if current == start:
                     stop = True
         return value
+
+
+if __name__ == '__main__':
+    h = HashTable()
+    h[54] = 'cat'
+    h[26] = 'dog'
+    h[93] = 'lion'
+    h[17] = 'tiger'
+    h[77] = 'bird'
+    h[31] = 'cow'
+    h[44] = 'goat'
+    h[55] = 'pig'
+    h[20] = 'chicken'
+    print(h.keys)
+    print(h.values)
+    print(h[20])
+    print(h[17])
+    h[20] = 'duck'
+    print(h[20])
+    print(h[99])

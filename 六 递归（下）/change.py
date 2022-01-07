@@ -3,7 +3,7 @@ def get_change_greedy(coins, amount):
     i = 0
     while i < len(coins):
         coin = coins[i]
-        if coin <= amount:
+        while coin <= amount:
             change.append(coin)
             amount = amount - coin
         else:
@@ -34,6 +34,7 @@ def get_change_dp(coins, amount):
         coin_count = step_amount
         # 2.减去每个硬币，向后查最少硬币数，同时记录总的最少数
         filter_coins = [coin for coin in coins if coin <= step_amount]
+        # 默认使用一分钱为最优解
         subtract = filter_coins[-1]
         for c in filter_coins:
             if mins[step_amount-c]+1 < coin_count:

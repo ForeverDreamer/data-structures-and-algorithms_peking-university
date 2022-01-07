@@ -30,12 +30,12 @@ def selection_sort(item_list):
     #         if item_list[pos] > item_list[pos_of_max]:
     #             pos_of_max = pos
     #     item_list[fill_slot], item_list[pos_of_max] = item_list[pos_of_max], item_list[fill_slot]
-    for fill_slot in range(len(item_list)-1, 0, -1):
+    for last in range(len(item_list)-1, 0, -1):
         pos_of_max = 0
-        for pos in range(1, fill_slot+1):
+        for pos in range(1, last+1):
             if item_list[pos] > item_list[pos_of_max]:
                 pos_of_max = pos
-        item_list[fill_slot], item_list[pos_of_max] = item_list[pos_of_max], item_list[fill_slot]
+        item_list[last], item_list[pos_of_max] = item_list[pos_of_max], item_list[last]
 
 
 unordered_items1 = [54, 26, 93, 17, 77, 31, 44, 55, 20]

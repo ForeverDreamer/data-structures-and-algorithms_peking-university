@@ -8,10 +8,12 @@ def partition(items, first, last):
 
     done = False
     while not done:
+
         while left_mark <= right_mark and items[left_mark] <= pivot:
             left_mark += 1
         while right_mark >= left_mark and items[right_mark] >= pivot:
             right_mark -= 1
+
         if left_mark > right_mark:
             done = True
         else:
