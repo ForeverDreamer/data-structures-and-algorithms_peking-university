@@ -48,6 +48,8 @@ class BinHeap:
             mc_pos = self.min_child(pos)
             if self._heap_list[pos] > self._heap_list[mc_pos]:
                 self._heap_list[pos], self._heap_list[mc_pos] = self._heap_list[mc_pos], self._heap_list[pos]
+            else:
+                break
             pos = mc_pos
 
     def del_min(self):
