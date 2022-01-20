@@ -70,28 +70,30 @@ int maze[5][5] = {
 """
 
 input_seq = [
-    '5 5', '0 1 0 0 0', '0 1 1 1 0', '0 0 0 0 0', '0 1 1 1 0', '0 0 0 1 0',
-    '5 5', '0 1 0 0 0', '0 1 0 1 0', '0 0 0 0 1', '0 1 1 1 0', '0 0 0 0 0',
+    '3 2', '0 1', '0 1', '0 0',
+    # '5 5', '0 1 0 0 0', '0 1 1 1 0', '0 0 0 0 0', '0 1 1 1 0', '0 0 0 1 0',
+    # '5 5', '0 1 0 0 0', '0 1 0 1 0', '0 0 0 0 1', '0 1 1 1 0', '0 0 0 0 0',
 ]
 
 
 offsets = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 g_row = 0
 g_col = 0
+g_data = []
 
 
 def move(pos, offset):
     r = pos[0]+offset[0]
     c = pos[1]+offset[1]
-    if (r < 0 or c < 0) or (r >= g_col or c >= g_row):
+    if (r < 0 or c < 0) or (c >= g_col or r >= g_row) or g_data[r][c] == '1':
         return None
     return r, c
 
 
-def bfs(data, walked, path):
-    # walked[path[-1][0]][path[-1][1]] = True
-    while len(path) > 0:
-        current = path.pop(0)
+def bfs(maze_map, start):
+    queue = [start]
+    while len(queue) > 0:
+        current = queue.pop(0)
         i = 0
         while i < len(offsets):
             new_pos = move(current['pos'], offsets[i])
@@ -100,23 +102,26 @@ def bfs(data, walked, path):
                 i += 1
                 continue
             r, c = new_pos
-            # 已经走过或是墙壁
-            nbr = walked[r][c]
-            if nbr['state'] == 'white':
-                nbr['state'] = 'gray'
+            nbr = maze_map[r][c]
+            if nbr['stage'] == '0':
+                nbr['stage'] = '1'
                 nbr['distance'] = current['distance'] + 1
                 nbr['previous'] = current
-                path.append(nbr)
+                queue.append(nbr)
+            i += 1
             # path.append(new_pos)
-        current['state'] = 'black'
-    return traverse(walked, walked[g_row-1][g_col-1])
+        current['stage'] = '2'
+    traverse(maze_map[g_row-1][g_col-1])
 
 
-def traverse(walked, dest):
+def traverse(dest):
+    output_seq = []
     while dest['previous']:
-        print(dest['pos'])
+        output_seq.append(dest['pos'])
         dest = dest['previous']
-    print(dest['pos'])
+    output_seq.append(dest['pos'])
+    for pos in output_seq[::-1]:
+        print(f'({str(pos[0])},{str(pos[1])})')
 
 
 def maze(seq):
@@ -128,20 +133,21 @@ def maze(seq):
         global g_row
         global g_col
         g_row, g_col = int(row), int(col)
-        data = []
-        y = i+1
-        while y <= i+g_row:
-            data.append(seq[y].split(' '))
-            y += 1
-        walked = []
+        global g_data
+        r = i+1
+        while r <= i+g_row:
+            g_data.append(seq[r].split(' '))
+            r += 1
+        maze_map = []
         for r in range(g_row):
-            walked.append([{'pos': (r, c), 'state': 'white', 'previous': None, 'distance': 0} for c in range(g_col)])
-        path = [walked[0][0]]
-        queue = [path]
-        output_seq.append(bfs(data, walked, path))
+            maze_map.append([{'pos': (r, c), 'stage': '0', 'previous': None, 'distance': 0} for c in range(g_col)])
+        output_seq.append(bfs(maze_map, maze_map[0][0]))
+        maze_map.clear()
+        g_data.clear()
         i += g_row+1
     return output_seq
 
 
-for item in maze(input_seq):
-    print(item)
+maze(input_seq)
+# for item in maze(input_seq):
+#     print(item)
