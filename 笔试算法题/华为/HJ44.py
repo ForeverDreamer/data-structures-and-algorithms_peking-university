@@ -102,9 +102,6 @@ fail_count = 0
 
 
 def dst(data, path, row, col):
-    if col == g_size:
-        col %= g_size
-        row += 1
     # 如果没有0点了，则表示完成了填充
     zero_pos = find_zero(data, row, col)
     if zero_pos is None:
