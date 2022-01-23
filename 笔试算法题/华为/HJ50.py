@@ -20,7 +20,8 @@ HJ50 四则运算
 25
 """
 
-input_str = '5-3+9*6*(6-10-2)'
+# input_str = '5-3+9*6*(6-10-2)'
+input_str = '-1*(-1-1)'
 
 
 def infix_to_postfix(infix_expression):
@@ -58,7 +59,7 @@ def infix_to_postfix(infix_expression):
                 top_token = operator_stack.pop()
         else:
             # 处理负数，list(prev)[0]：处理两位以上的操作数
-            if (token == '-') and (list(prev)[0] not in operands) and (prev != ')'):
+            if (token == '-') and (prev is None or (prev and (list(prev)[0] not in operands) and (prev != ')'))):
                 postfix_list.append(token+token_list[i+1])
                 token = token_list[i+1]
                 i += 1

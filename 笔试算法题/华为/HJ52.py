@@ -65,11 +65,11 @@ a[i]替换成b[j]，或b[j]替换成a[i]，lev[i][j] = lev[i-1][j-1] + 1;
 此时考虑两种情况，若第i个字符和第j个字符不同，那么加1即可（替换）；如果相同，那么不需要加1（两个字符串都加上相同的字符，不影响距离）。
 
     h e l l o
-  0 1
-k 1
-e
-l
-m
+  0 1 2 3 4 5
+k 1 1 2 3 4 5
+e 2 2 1 2 3 4
+l 3 3 2 1 2 3
+m 4 4 3 2 2 3
 """
 
 input_seq = ['kelm', 'hello', 'abcdefg', 'abcdef', 'abcde', 'abcdf', 'abcde', 'bcdef']
