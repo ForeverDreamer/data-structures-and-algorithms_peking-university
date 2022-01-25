@@ -84,21 +84,37 @@ AND运算  11000000.10101000.00000000.00000000
 对于第三个例子，2个与运算之后，如题目描述所示，在同一个子网，输出0
 """
 
-# 更简单的思路，只需对比前n段的ip字符串是否相同，n为子网掩码网络号即255的数量
-
 input_seq = [
-    '255.0.0.0', '85.122.52.249', '10.57.28.117',
+    # '255.255.252.0', '173.225.245.45', '69.138.93.228',
+    # '255.255.0.1', '97.151.30.191', '240.102.155.58',
+    '255.255.252.0', '0.151.30.191', '240.102.155.58',
+    # '255.0.0.0', '85.122.52.249', '10.57.28.117',
     # '255.0.0.0', '193.194.202.15', '232.43.7.59',
     # '255.255.255.0', '192.168.0.254', '192.168.0.1',
 ]
 
 
-def decimal_to_binary(n, mask=False):
+def validate_mask(mask):
+    allow_one = True
+    for bit in mask:
+        if allow_one:
+            if bit == '1':
+                continue
+            else:
+                allow_one = False
+        else:
+            if bit == '1':
+                raise ValueError()
+
+
+def validate_ip(ip_segments):
+    if ip_segments[0] == '00000000':
+        raise ValueError()
+
+
+def decimal_to_binary(n):
     if not (0 <= n <= 255):
         raise ValueError()
-    if mask:
-        if n != 0 and n != 255:
-            raise ValueError()
     bin_seq = ''
     # 转换成倒序的二进制
     while n > 0:
@@ -111,9 +127,12 @@ def decimal_to_binary(n, mask=False):
 
 def execute(mask, ip1, ip2):
     try:
-        mask_segments = [decimal_to_binary(int(n), True) for n in mask.split('.')]
+        mask_segments = [decimal_to_binary(int(n)) for n in mask.split('.')]
+        validate_mask(''.join(mask_segments))
         ip1_segments = [decimal_to_binary(int(n)) for n in ip1.split('.')]
+        validate_ip(ip1_segments)
         ip2_segments = [decimal_to_binary(int(n)) for n in ip2.split('.')]
+        validate_ip(ip2_segments)
     except ValueError:
         return 1
     for mask_segs, ip1_segs, ip2_segs in zip(mask_segments, ip1_segments, ip2_segments):
