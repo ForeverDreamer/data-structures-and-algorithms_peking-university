@@ -18,4 +18,4 @@ def divide_by_2(quotient):
 
 
 if __name__ == '__main__':
-    print(divide_by_2(42))
+    print(divide_by_2(224))
