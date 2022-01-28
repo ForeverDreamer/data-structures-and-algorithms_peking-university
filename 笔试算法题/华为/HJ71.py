@@ -93,11 +93,21 @@ from string import ascii_uppercase, ascii_lowercase, digits
 input_seq = [
     # 't?t*.*', 'txt12.xls',
     # 'te?t*.*', 'txt12.xls',
-    'z', 'zz',
-    'pq', 'pppq',
-    '**Z', '0QZz',
-    '?*Bc*?', 'abcd',
-    'h*?*a', 'h#a',
+    # 'z', 'zz',
+    # 'pq', 'pppq',
+    # '**Z', '0QZz',
+    # '?*Bc*?', 'abcd',
+    # 'h*?*a', 'h#a',
+    # '**h', 'hhh',
+    # '*h', 'h',
+    # 'dvq*duz*bqlwqaxu*gtrra?k',
+    # 'dvqyduzebqlwqaxusgtrratk',
+    # 'h*h*ah**ha*h**h***hha',
+    # 'hhhhhhhahhaahhahhhhaaahhahhahaaahhahahhhahhhahaaahaah',
+    't?t*1*.*',
+    'txt12.xls',
+    '?*Bc*?',
+    'abcd',
 ]
 
 
@@ -130,7 +140,27 @@ def execute(pattern, chars):
                 return False
         elif c1 == '*':
             if is_letter_or_digit(c2):
-                j += 1
+                # try:
+                #     # 匹配0个字符
+                #     if pattern[i+1].lower() == c2.lower():
+                #         i += 1
+                #         continue
+                #     # 匹配多个字符
+                #     while is_letter_or_digit(chars[j+1]):
+                #         if pattern[i+1].lower() != chars[j+1].lower():
+                #             j += 1
+                #         else:
+                #             break
+                #     i += 1
+                # except IndexError:
+                #     j += 1
+                # 匹配0个字符
+                # 匹配1个字符
+                # 匹配多个字符
+                try:
+                    return execute(pattern[i+1], chars[j]) or execute(pattern[i+1], chars[j+1]) or execute(pattern[i], chars[j+1])
+                except IndexError:
+                    pass
             else:
                 i += 1
         else:
@@ -141,10 +171,13 @@ def execute(pattern, chars):
                 return False
     if j < len(chars):
         return False
-    if i+1 < len(pattern):
-        return pattern[i+1] == '*'
-    else:
-        return True
+    while i+1 < len(pattern):
+        if pattern[i+1] == '*':
+            i += 1
+        else:
+            return pattern[i+1] == chars[j-1]
+
+    return True
 
 
 # 解题思路：(待验证)
