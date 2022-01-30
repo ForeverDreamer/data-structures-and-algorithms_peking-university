@@ -11,4 +11,4 @@ def arbitrary_base_conversion(quotient, base):
 
 
 if __name__ == '__main__':
-    print(arbitrary_base_conversion(1453, 16))
+    print(arbitrary_base_conversion(16, 2))
