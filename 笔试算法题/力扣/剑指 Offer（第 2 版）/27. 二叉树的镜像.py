@@ -26,7 +26,8 @@
 0 <= 节点个数 <= 1000
 """
 
-from utils import TreeNode
+from utils import TreeNode, Tree
+
 
 class Solution:
     def mirrorTree(self, root: TreeNode) -> TreeNode:
@@ -41,3 +42,6 @@ class Solution:
                 stack.append(node.right)
             node.left, node.right = node.right, node.left
         return root
+
+
+print(Solution().mirrorTree(Tree([4, 2, 7, 1, 3, 6, 9]).root))

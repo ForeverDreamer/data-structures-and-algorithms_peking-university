@@ -51,12 +51,6 @@ p = "c*a*b"
 a F F F T T F    s = 'a'
 a F F F F T F    s = 'aa'
 b F F F F F T    s = 'aab'
-
-
-作者：LeetCode-Solution
-链接：https://leetcode-cn.com/problems/zheng-ze-biao-da-shi-pi-pei-lcof/solution/zheng-ze-biao-da-shi-pi-pei-by-leetcode-s3jgn/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 """
 
 

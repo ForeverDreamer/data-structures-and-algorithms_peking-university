@@ -88,8 +88,14 @@ class Solution:
         pre = 1
         cur = 2
         for _ in range(3, n+1):
-            pre, cur = cur, (pre + cur) % 1000000007
-        return cur
+            pre, cur = cur, (pre + cur)
+        return cur % 1000000007
+
+        # def numWays(self, n: int) -> int:
+        #     a, b = 1, 1
+        #     for _ in range(n):
+        #         a, b = b, a + b
+        #     return a % 1000000007
 
 
 print(Solution().numWays(3))
