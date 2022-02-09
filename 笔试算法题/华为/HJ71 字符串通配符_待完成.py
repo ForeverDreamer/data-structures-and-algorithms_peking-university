@@ -111,8 +111,45 @@ input_seq = [
 ]
 
 
-def is_letter_or_digit(c):
-    return c in (ascii_uppercase + ascii_lowercase + digits)
+# 牛客网答案
+class Solution:
+    def match(self, p: str, s: str) -> bool:
+        # 边界定义-各种单边或双边为空的情况
+        if s == '' and p == '':
+            return True
+        elif s != '' and p == '':
+            return False
+        elif s == '':
+            if p.replace('*', '') == '':
+                return True
+            else:
+                return False
+            # 字符串与通配符均不为空，递归检查
+        else:
+            n, m = len(s), len(p)
+            # '''通配符是问号或者字母'''
+            if (p[m - 1] == '?' and s[n - 1].isalnum()) or p[m - 1].lower() == s[n - 1].lower():
+                return self.match(p[0:m - 1], s[0:n - 1])
+            # '''通配符是星号'''
+            elif p[m - 1] == '*':
+                return self.match(p[0:m - 1], s) or self.match(p, s[0:n - 1])
+
+            # '''通配符不是问号或者字母，还跟字符串匹配不上'''
+            else:
+                return False
+
+
+while True:
+    try:
+        p, s = input(), input()
+        s1 = Solution()
+        print('true' if s1.match(p, s) else 'false')
+
+    except:
+        break
+
+# def is_letter_or_digit(c):
+#     return c in (ascii_uppercase + ascii_lowercase + digits)
 
 
 # 采用递归的思路。从前向后依次匹配：
@@ -126,58 +163,58 @@ def is_letter_or_digit(c):
 # ————————————————
 # 版权声明：本文为CSDN博主「你板子冒烟了」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 # 原文链接：https://blog.csdn.net/engineer0/article/details/120574491
-def execute(pattern, chars):
-    i = 0
-    j = 0
-    while (i < len(pattern)) and (j < len(chars)):
-        c1 = pattern[i]
-        c2 = chars[j]
-        if c1 == '?':
-            if is_letter_or_digit(c2):
-                i += 1
-                j += 1
-            else:
-                return False
-        elif c1 == '*':
-            if is_letter_or_digit(c2):
-                # try:
-                #     # 匹配0个字符
-                #     if pattern[i+1].lower() == c2.lower():
-                #         i += 1
-                #         continue
-                #     # 匹配多个字符
-                #     while is_letter_or_digit(chars[j+1]):
-                #         if pattern[i+1].lower() != chars[j+1].lower():
-                #             j += 1
-                #         else:
-                #             break
-                #     i += 1
-                # except IndexError:
-                #     j += 1
-                # 匹配0个字符
-                # 匹配1个字符
-                # 匹配多个字符
-                try:
-                    return execute(pattern[i+1], chars[j]) or execute(pattern[i+1], chars[j+1]) or execute(pattern[i], chars[j+1])
-                except IndexError:
-                    pass
-            else:
-                i += 1
-        else:
-            if c1.lower() == c2.lower():
-                i += 1
-                j += 1
-            else:
-                return False
-    if j < len(chars):
-        return False
-    while i+1 < len(pattern):
-        if pattern[i+1] == '*':
-            i += 1
-        else:
-            return pattern[i+1] == chars[j-1]
-
-    return True
+# def execute(pattern, chars):
+#     i = 0
+#     j = 0
+#     while (i < len(pattern)) and (j < len(chars)):
+#         c1 = pattern[i]
+#         c2 = chars[j]
+#         if c1 == '?':
+#             if is_letter_or_digit(c2):
+#                 i += 1
+#                 j += 1
+#             else:
+#                 return False
+#         elif c1 == '*':
+#             if is_letter_or_digit(c2):
+#                 # try:
+#                 #     # 匹配0个字符
+#                 #     if pattern[i+1].lower() == c2.lower():
+#                 #         i += 1
+#                 #         continue
+#                 #     # 匹配多个字符
+#                 #     while is_letter_or_digit(chars[j+1]):
+#                 #         if pattern[i+1].lower() != chars[j+1].lower():
+#                 #             j += 1
+#                 #         else:
+#                 #             break
+#                 #     i += 1
+#                 # except IndexError:
+#                 #     j += 1
+#                 # 匹配0个字符
+#                 # 匹配1个字符
+#                 # 匹配多个字符
+#                 try:
+#                     return execute(pattern[i+1], chars[j]) or execute(pattern[i+1], chars[j+1]) or execute(pattern[i], chars[j+1])
+#                 except IndexError:
+#                     pass
+#             else:
+#                 i += 1
+#         else:
+#             if c1.lower() == c2.lower():
+#                 i += 1
+#                 j += 1
+#             else:
+#                 return False
+#     if j < len(chars):
+#         return False
+#     while i+1 < len(pattern):
+#         if pattern[i+1] == '*':
+#             i += 1
+#         else:
+#             return pattern[i+1] == chars[j-1]
+#
+#     return True
 
 
 # 解题思路：(待验证)
@@ -208,16 +245,16 @@ def execute(pattern, chars):
 #     return table[m][n]
 
 
-def wildcard_character(seq):
-    output_seq = []
-    i = 0
-    while i+1 < len(seq):
-        pattern = seq[i]
-        chars = seq[i+1]
-        output_seq.append('true' if execute(pattern, chars) else 'false')
-        i += 2
-    for item in output_seq:
-        print(item)
-
-
-wildcard_character(input_seq)
+# def wildcard_character(seq):
+#     output_seq = []
+#     i = 0
+#     while i+1 < len(seq):
+#         pattern = seq[i]
+#         chars = seq[i+1]
+#         output_seq.append('true' if execute(pattern, chars) else 'false')
+#         i += 2
+#     for item in output_seq:
+#         print(item)
+#
+#
+# wildcard_character(input_seq)

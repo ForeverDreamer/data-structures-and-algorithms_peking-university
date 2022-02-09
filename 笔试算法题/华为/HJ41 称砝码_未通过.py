@@ -43,36 +43,56 @@ HJ41 称砝码
 提交会超时，应该有更优的算法实现
 """
 
-input_seq = ['10', '4 185 35 191 26 148 149 3 172 147', '3 5 2 1 5 5 3 1 4 2']
+
+# 牛客网答案
+while True:
+    try:
+        n = int(input())
+        m = list(map(int, input().split()))
+        x = list(map(int, input().split()))
+    except:
+        break
+    else:
+        amount = []
+        weights = {0, }
+        for i in range(n):
+            for j in range(x[i]):
+                amount.append(m[i])
+
+        for i in amount:
+            for j in list(weights):
+                weights.add(i + j)
+        print(len(weights))
 
 
-def execute(n, m, x, i, w, s):
-    if i >= n:
-        return
-    j = 0
-    while j <= x[i]:
-        w += m[i]*j
-        s.add(w)
-        execute(n, m, x, i+1, w, s)
-        w -= m[i]*j
-        j += 1
+# input_seq = ['10', '4 185 35 191 26 148 149 3 172 147', '3 5 2 1 5 5 3 1 4 2']
 
 
-def count_chars(seq):
-    output_seq = []
-    i = 0
-    while i + 2 < len(seq):
-        n = int(seq[i])
-        m = [int(m_i) for m_i in seq[i+1].split(' ')]
-        x = [int(x_i) for x_i in seq[i+2].split(' ')]
-        s = set()
-        execute(n, m, x, 0, 0, s)
-        output_seq.append(len(s))
-        i += 3
-    return output_seq
-
-
-for item in count_chars(input_seq):
-    print(item)
-
-
+# def execute(n, m, x, i, w, s):
+#     if i >= n:
+#         return
+#     j = 0
+#     while j <= x[i]:
+#         w += m[i]*j
+#         s.add(w)
+#         execute(n, m, x, i+1, w, s)
+#         w -= m[i]*j
+#         j += 1
+#
+#
+# def count_chars(seq):
+#     output_seq = []
+#     i = 0
+#     while i + 2 < len(seq):
+#         n = int(seq[i])
+#         m = [int(m_i) for m_i in seq[i+1].split(' ')]
+#         x = [int(x_i) for x_i in seq[i+2].split(' ')]
+#         s = set()
+#         execute(n, m, x, 0, 0, s)
+#         output_seq.append(len(s))
+#         i += 3
+#     return output_seq
+#
+#
+# for item in count_chars(input_seq):
+#     print(item)

@@ -80,78 +80,153 @@ LIS详解：
 原文链接：https://blog.csdn.net/ltrbless/article/details/81318935
 """
 
-input_seq = ['8', '186 186 150 200 160 130 197 200']
+# 牛客网答案
+# 通过测试代码
+# import bisect #引入二分法
+# def hcteam(l): #定义一个函数，寻找最长的子序列
+#     arr = [l[0]] #定义列表，将传入函数的列表第一个元素放入当前元素
+#     dp = [1]*len(l) #定义一个列表，默认子序列有当前元素1，长度是传入函数的列表长度
+#     for i in range(1,len(l)): #从第二个元素开始查找
+#         if l[i] > arr[-1]: #如果元素大于arr列表的最后一个元素，就把它插入列表末尾
+#             arr.append(l[i])
+#             dp[i] = len(arr)# 获取这个元素子序列的长度
+#         else: # 否则，利用二分法找到比元素大的元素的位置，用新的元素替代比它大的那个元素的值，这样就能制造出一个顺序排列的子序列
+#             pos = bisect.bisect_left(arr, l[i])
+#             arr[pos] = l[i]
+#             dp[i] =pos+1 # 获取这个元素子序列的长度
+#     return dp
+#
+# while True:
+#     try:
+#         n = int(input())
+#         sg = list(map(int,input().split()))
+#         left_t = hcteam(sg) #向左遍历查找子序列
+#         right_t = hcteam(sg[::-1])[::-1] #向右遍历查找子序列
+#         res = [left_t[i]+right_t[i]-1 for i in range(len(sg))] #因为左右都包含原元素，所以需要减1 ；得到各元素能得到的子序列的最大长度
+#         print(n-max(res)) # 源列表长度-可以生成的最长子序列长度  得到需要剔除的最小人数
+#     except:
+#         break
+
+# 代码1：
+# dp的顺序查找，时间复杂度O(N ^ 2)
+# def left_max(l):
+#  # 计算每个人左边出现的最多的人数
+#  # 186 186 150 200 160 130 197 200
+#  dp = [1] * len(l) # 若左边没有比自己小的数，则为自己本身，所以初始值为1
+#  for i in range(len(l)): # 从左往右遍历
+#      for j in range(i):
+#          if l[j]<l[i] and dp[i]<dp[j]+1:
+#              dp[i] = dp[j]+1
+#        # if l[j]<l[i]:
+#        #     dp[i] = max(dp[i],dp[j]+1) 会超时
+#  return dp #1 1 1 2 2 1 3 4
+#            # 从右往左推每个人右边可以站的最多的人数
+#            # 3 3 2 3 2 1 1 1
+# while True:
+#  try:
+#      N = int(input())
+#      ss = list(map(int,input().split()))
+#      left_s = left_max(ss)
+#      right_s = left_max(ss[::-1])[::-1]
+#      sum_s = []
+#      for i in range(len(left_s)):
+#          # left_s[i]+right_s[i]-1表示此人是中间位置的人时，合唱队的人数
+#          sum_s.append(left_s[i]+right_s[i]-1)
+#      print(str(N-max(sum_s)))
+#  except:
+#      break
+
+# 代码2：
+# 二分查找，时间复杂度0(logN)
+# import bisect
+# def max_l(l,dp):
+#  dp += [1] # dp[i]表示第i个人左边能够站的最多的人数
+#  b = [float('inf') for i in range(len(l))] # 往b列表中插入，则初始化应该为无穷大
+#  b[0] = l[0] # 第一个人
+#  for i in range(1,len(l)):
+#      # print(b,l[i])
+#      pos = bisect.bisect_left(b,l[i])
+#      # 在 b 中找到 l[i] 合适的插入点以维持有序。
+#      # print(pos)
+#      b[pos] = l[i]
+#      dp += [pos+1]
+#  return dp
+# while True:
+# ...
 
 
-# 最长上升子序列（LIS，Longest Increasing Subsequence
-def lis(heights):
-    seq = []
-
-    i = 0
-    while i < len(heights):
-        seq.append(1)
-        j = 0
-        while j < i:
-            if heights[j] < heights[i]:
-                seq[i] = max(seq[i], seq[j]+1)
-            j += 1
-        i += 1
-
-    return seq
-
-
-# 最长下降子序列（LDS，Longest Decreasing Subsequence），自己命名的。。。
-def lds(heights):
-    dic = {}
-
-    i = len(heights)-1
-    while i >= 0:
-        dic[i] = 1
-        j = len(heights)-1
-        while j > i:
-            if heights[j] < heights[i]:
-                dic[i] = max(dic[i], dic[j] + 1)
-            j -= 1
-        i -= 1
-
-    return dic
-
-
-def minimum_out(num, heights):
-    left = lis(heights)
-    # right = lis(heights[::-1])[::-1]
-    right = lds(heights)
-    maximum = 0
-    i = 0
-    while i < num:
-        # 合唱队人数=左边人数+右边人数-1，中间的人被计算了2次，所以减1
-        if maximum < left[i]+right[i]-1:
-            maximum = left[i]+right[i]-1
-        i += 1
-    # 出列人数=总人数-合唱队人数
-    return num-maximum
-
-
-def minimum_out_seq(seq):
-    output_seq = []
-    i = 0
-    while i+1 < len(seq):
-        num = int(seq[i])
-        # heights_strs = seq[i + 1].split(' ')
-        # heights = []
-        # # heights_reverse = []
-        # start = 0
-        # # end = len(heights_strs)-1
-        # while start < len(heights_strs):
-        #     heights.append(int(heights_strs[start]))
-        #     # heights_reverse.append(heights_strs[end])
-        #     start += 1
-        #     # end -= 1
-        heights = [int(height) for height in seq[i + 1].split(' ')]
-        output_seq.append(minimum_out(num, heights))
-        i += 2
-    return output_seq
-
-
-for item in minimum_out_seq(input_seq):
-    print(item)
+# input_seq = ['8', '186 186 150 200 160 130 197 200']
+#
+#
+# # 最长上升子序列（LIS，Longest Increasing Subsequence
+# def lis(heights):
+#     seq = []
+#
+#     i = 0
+#     while i < len(heights):
+#         seq.append(1)
+#         j = 0
+#         while j < i:
+#             if heights[j] < heights[i]:
+#                 seq[i] = max(seq[i], seq[j]+1)
+#             j += 1
+#         i += 1
+#
+#     return seq
+#
+#
+# # 最长下降子序列（LDS，Longest Decreasing Subsequence），自己命名的。。。
+# def lds(heights):
+#     dic = {}
+#
+#     i = len(heights)-1
+#     while i >= 0:
+#         dic[i] = 1
+#         j = len(heights)-1
+#         while j > i:
+#             if heights[j] < heights[i]:
+#                 dic[i] = max(dic[i], dic[j] + 1)
+#             j -= 1
+#         i -= 1
+#
+#     return dic
+#
+#
+# def minimum_out(num, heights):
+#     left = lis(heights)
+#     # right = lis(heights[::-1])[::-1]
+#     right = lds(heights)
+#     maximum = 0
+#     i = 0
+#     while i < num:
+#         # 合唱队人数=左边人数+右边人数-1，中间的人被计算了2次，所以减1
+#         if maximum < left[i]+right[i]-1:
+#             maximum = left[i]+right[i]-1
+#         i += 1
+#     # 出列人数=总人数-合唱队人数
+#     return num-maximum
+#
+#
+# def minimum_out_seq(seq):
+#     output_seq = []
+#     i = 0
+#     while i+1 < len(seq):
+#         num = int(seq[i])
+#         # heights_strs = seq[i + 1].split(' ')
+#         # heights = []
+#         # # heights_reverse = []
+#         # start = 0
+#         # # end = len(heights_strs)-1
+#         # while start < len(heights_strs):
+#         #     heights.append(int(heights_strs[start]))
+#         #     # heights_reverse.append(heights_strs[end])
+#         #     start += 1
+#         #     # end -= 1
+#         heights = [int(height) for height in seq[i + 1].split(' ')]
+#         output_seq.append(minimum_out(num, heights))
+#         i += 2
+#     return output_seq
+#
+#
+# for item in minimum_out_seq(input_seq):
+#     print(item)
