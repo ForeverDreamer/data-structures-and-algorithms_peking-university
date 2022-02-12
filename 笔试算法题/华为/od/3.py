@@ -13,7 +13,10 @@
 输出: 3 7 2
 """
 
-input_seq = [3, 5, 7, -1, -1, 2, 4]
+# input_seq = [3, 5, 7, -1, -1, 2, 4]
+# input_seq = [3, 5, 7, 1, -1, 2, 4]
+# input_seq = [3, 5, 7, -1, -1, 2, 1]
+input_seq = [4, 5, 7, 8, 9, 6, 3, 1, -1]
 
 
 class BinTree:
@@ -25,45 +28,16 @@ class BinTree:
         if self.data[i] == -1:
             return False
         out.append(self.data[i])
-        level = 1
-        i = 1
-        if self.data[i * 2] == -1 and self.data[i * 2 + 1] == -1:
+        if i*2+1 > len(self.data)-1:
             if out[-1] != self.min_num:
+                out.pop()
                 return False
             return True
-        if self.data[i * 2] == -1:
-            out.append(self.data[i * 2 + 1])
-            done = self.dsf(i*2+2, out)
-        if self.data[i * 2 + 1] == -1:
-            out.append(self.data[i * 2])
-            done = self.dsf(i*2+2, out)
-        if self.data[i * 2] < self.data[i * 2 + 1]:
-            out.append(self.data[i * 2])
-            done = self.dsf(i*2+2, out)
-        else:
-            out.append(self.data[i * 2 + 1])
-            done = self.dsf(i*2+2, out)
-        if done:
-            return True
-        else:
-            out.pop()
-            done = self.dsf(i // 2, out)
-        # while i*2+1 <= len(self.data):
-        #     if self.data[i*2] == -1 and self.data[i*2+1] == -1:
-        #         break
-        #     if self.data[i*2] == -1:
-        #         data.append(self.data[i*2+1])
-        #         break
-        #     if self.data[i*2+1] == -1:
-        #         data.append(self.data[i*2])
-        #         break
-        #     if self.data[i*2] < self.data[i*2+1]:
-        #         data.append(self.data[i*2])
-        #     else:
-        #         data.append(self.data[i*2+1])
-        #     level += 1
-        #     i = i*2+1
-
+        for j in (i * 2, i * 2 + 1):
+            if self.dsf(j, out):
+                return True
+        out.pop()
+        return False
 
 
 out_put = []
