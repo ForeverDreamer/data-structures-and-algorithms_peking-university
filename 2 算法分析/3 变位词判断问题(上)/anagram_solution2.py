@@ -7,11 +7,12 @@ def anagram_solution2(word1, word2):
     word2.sort()
     pos = 0
     match = True
-    while pos < len(word1) and match:
+    while pos < len(word1):
         if word1[pos] == word2[pos]:
             pos += 1
         else:
             match = False
+            break
     return match
 
 
