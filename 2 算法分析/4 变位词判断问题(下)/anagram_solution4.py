@@ -41,8 +41,8 @@ def anagram_solution4(s1, s2):
         else:
             d2[code2] = 1
 
-    for key1 in d1:
-        if d1.get(key1) == d2.get(key1):
+    for key in d1:
+        if d1.get(key) == d2.get(key):
             continue
         return False
 
