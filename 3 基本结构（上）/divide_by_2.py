@@ -3,16 +3,15 @@ from stack import StackEnd
 
 
 def divide_by_2(quotient):
-    remainder_stack = StackEnd()
+    s = StackEnd()
 
     while quotient > 0:
-        remainder = quotient % 2
-        remainder_stack.push(remainder)
+        s.push(quotient % 2)
         quotient = quotient // 2
 
     bin_string = ''
-    while not remainder_stack.is_empty():
-        bin_string = bin_string + str(remainder_stack.pop())
+    while not s.is_empty():
+        bin_string = bin_string + str(s.pop())
 
     return bin_string
 

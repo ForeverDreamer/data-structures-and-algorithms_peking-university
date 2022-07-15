@@ -7,8 +7,7 @@ def base_converter(quotient, base):
     remainder_stack = StackEnd()
 
     while quotient > 0:
-        remainder = quotient % base
-        remainder_stack.push(remainder)
+        remainder_stack.push(quotient % base)
         quotient = quotient // base
 
     print(remainder_stack._items)
@@ -22,3 +21,4 @@ def base_converter(quotient, base):
 if __name__ == '__main__':
     print(base_converter(25, 2))
     print(base_converter(25, 16))
+    print(base_converter(987, 10))

@@ -2,26 +2,31 @@
 from stack import StackEnd
 
 
-def parenthese_matcher1(symbol_string):
+def parenthese_matcher1(tokens):
     s = StackEnd()
     balance = True
-    index = 0
-    while index < len(symbol_string) and balance:
-        symbol = symbol_string[index]
-        if symbol == '(':
-            s.push(symbol)
+    pos = 0
+
+    while pos < len(tokens):
+        token = tokens[pos]
+        if token == '(':
+            s.push(token)
         else:
             if s.is_empty():
                 balance = False
                 break
             else:
                 s.pop()
-        index += 1
-    match = True if balance and s.is_empty() else False
-    return match
+        pos += 1
+
+    return True if balance and s.is_empty() else False
 
 
-def matches(open_symbol, close_symbol):
+open_tokens = '([{'
+close_tokens = ')]}'
+
+
+def matches(open_token, close_token):
     # if open_symbol == '(':
     #     return True if close_symbol == ')' else False
     # elif open_symbol == '[':
@@ -30,29 +35,29 @@ def matches(open_symbol, close_symbol):
     #     return True if close_symbol == '}' else False
     # else:
     #     raise ValueError('invalid symbol string!')
-    open_symbols = '([{'
-    close_symbols = ')]}'
-    return open_symbols.index(open_symbol) == close_symbols.index(close_symbol)
+    return open_tokens.index(open_token) == close_tokens.index(close_token)
 
 
-def parenthese_matcher2(symbol_string):
+def parenthese_matcher2(tokens):
     s = StackEnd()
     balance = True
-    index = 0
-    while index < len(symbol_string) and balance:
-        symbol = symbol_string[index]
-        if symbol in '([{':
-            s.push(symbol)
+    pos = 0
+
+    while pos < len(tokens):
+        token = tokens[pos]
+        if token in open_tokens:
+            s.push(token)
         else:
             if s.is_empty():
                 balance = False
+                break
             else:
-                top = s.pop()
-                if not matches(top, symbol):
+                if not matches(s.pop(), token):
                     balance = False
-        index += 1
-    match = True if balance and s.is_empty() else False
-    return match
+                    break
+        pos += 1
+
+    return True if balance and s.is_empty() else False
 
 
 if __name__ == '__main__':

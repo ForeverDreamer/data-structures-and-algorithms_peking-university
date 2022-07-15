@@ -3,9 +3,9 @@ from stack import StackEnd
 
 
 def infix_to_postfix(infix_expression):
-    priority = {'*': 3, '/': 3, '+': 2,  '-': 2, '(': 1}
-    operands = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    digits = '0123456789'
+    priority = {'*': 3, '/': 3, '+': 2,  '-': 2, '(': 0}
+    operands = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    # digits = '0123456789'
 
     operator_stack = StackEnd()
     postfix_list = []
@@ -13,7 +13,7 @@ def infix_to_postfix(infix_expression):
 
     for token in token_list:
         # if token in operands or token in digits:
-        if token in operands or token in digits:
+        if token in operands:
             postfix_list.append(token)
         elif token == '(':
             operator_stack.push(token)
