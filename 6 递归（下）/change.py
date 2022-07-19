@@ -30,18 +30,20 @@ def get_change_dp(coins, amount):
     subtracts = [0]*64
     # 从1分开始到amount逐个计算最少硬币数
     for step_amount in range(1, amount+1):
-        # 1.初始化一个最大值
-        coin_count = step_amount
+        # 1.初始化一个最大值，即假设全部使用1分硬币
+        min_count = step_amount * 1
+        # 默认当前使用一分钱
+        subtract = 1
         # 2.减去每个硬币，向后查最少硬币数，同时记录总的最少数
         filter_coins = [coin for coin in coins if coin <= step_amount]
-        # 默认使用一分钱为最优解
-        subtract = filter_coins[-1]
         for c in filter_coins:
-            if mins[step_amount-c]+1 < coin_count:
-                coin_count = mins[step_amount-c] + 1
+            # 如果使用当前硬币的解小于当前最优解，更新当前最优解，记录使用的硬币
+            current_count = mins[step_amount-c] + 1
+            if current_count < min_count:
+                min_count = current_count
                 subtract = c
         # 3.得到当前最少硬币数，记录到表中
-        mins[step_amount] = coin_count
+        mins[step_amount] = min_count
         subtracts[step_amount] = subtract
     # 返回最后一个结果
     return mins[amount], collect_coins(amount, subtracts)

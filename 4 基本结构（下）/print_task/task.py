@@ -9,9 +9,9 @@ class Task:
         self._submit_time = submit_time
         self._page_num = random.randrange(1, Task.page_num_limit + 1)
 
-    @property
-    def submit_time(self):
-        return self._submit_time
+    # @property
+    # def submit_time(self):
+    #     return self._submit_time
 
     @property
     def page_num(self):

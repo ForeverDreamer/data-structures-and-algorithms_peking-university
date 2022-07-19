@@ -3,7 +3,7 @@
 
 class Printer:
     def __init__(self, print_speed):
-        self._print_speed = print_speed
+        self._senconds_per_page = 60 / print_speed
         self._current_task = None
         self._time_remaining = 0
 
@@ -19,5 +19,4 @@ class Printer:
 
     def start_next(self, new_task):
         self._current_task = new_task
-        senconds_per_page = 60 / self._print_speed
-        self._time_remaining = new_task.page_num * senconds_per_page
+        self._time_remaining = new_task.page_num * self._senconds_per_page

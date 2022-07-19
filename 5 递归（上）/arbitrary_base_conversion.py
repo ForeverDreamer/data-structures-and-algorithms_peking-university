@@ -3,7 +3,7 @@
 token_table = '0123456789ABCDEF'
 
 
-def arbitrary_base_conversion(quotient, base):
+def arbitrary_base_conversion(quotient, base=10):
     if quotient < base:
         return token_table[quotient]
     else:
@@ -11,4 +11,5 @@ def arbitrary_base_conversion(quotient, base):
 
 
 if __name__ == '__main__':
+    print(arbitrary_base_conversion(13579))
     print(arbitrary_base_conversion(16, 2))

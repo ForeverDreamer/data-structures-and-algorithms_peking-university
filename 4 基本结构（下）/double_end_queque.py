@@ -6,6 +6,9 @@ class DoubleEndQueue:
     def __init__(self):
         self._items = []
 
+    def __repr__(self):
+        return str(self._items)
+
     def empty(self):
         return len(self._items) == 0
 
@@ -32,11 +35,12 @@ def palindrome(string):
         de_queue.add_front(char)
 
     equal = True
-    while de_queue.size() > 1 and equal:
+    while de_queue.size() > 1:
         front = de_queue.remove_front()
         rear = de_queue.remove_rear()
         if front != rear:
             equal = False
+            break
 
     return equal
 

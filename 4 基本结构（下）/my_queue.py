@@ -5,6 +5,9 @@ class MyQueue:
     def __init__(self):
         self._items = []
 
+    def __repr__(self):
+        return str(self._items)
+
     def is_empty(self):
         return len(self._items) == 0
 
