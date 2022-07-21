@@ -2,13 +2,13 @@
 
 
 def insertion_sort(items):
-    for index in range(1, len(items)):
-        current_val = items[index]
-        position = index
-        while position > 0 and items[position-1] > current_val:
-            items[position] = items[position-1]
-            position -= 1
-        items[position] = current_val
+    for i in range(1, len(items)):
+        pos = i
+        curr_val = items[pos]
+        while pos > 0 and items[pos-1] > curr_val:
+            items[pos] = items[pos-1]
+            pos -= 1
+        items[pos] = curr_val
 
 
 if __name__ == '__main__':

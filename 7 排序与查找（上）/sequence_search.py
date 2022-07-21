@@ -5,9 +5,10 @@ def unordered_search(item_list, target):
     pos = 0
     found = False
 
-    while pos < len(item_list) and not found:
+    while pos < len(item_list):
         if item_list[pos] == target:
             found = True
+            break
         else:
             pos += 1
 
@@ -17,14 +18,14 @@ def unordered_search(item_list, target):
 def ordered_search(item_list, target):
     pos = 0
     found = False
-    stop = False
 
-    while pos < len(item_list) and not found and not stop:
+    while pos < len(item_list):
         if item_list[pos] == target:
             found = True
+            break
         else:
             if item_list[pos] > target:
-                stop = True
+                break
             else:
                 pos += 1
 
