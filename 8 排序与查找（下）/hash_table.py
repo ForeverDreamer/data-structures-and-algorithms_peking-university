@@ -36,29 +36,27 @@ class HashTable:
                 next_hashvalue = self.rehash(hashvalue)
                 while self._keys[next_hashvalue] and self._keys[next_hashvalue] != key:
                     next_hashvalue = self.rehash(next_hashvalue)
-                # key已存在，更新value
+                # 找到key, key已存在，更新value
                 if self._keys[next_hashvalue]:
                     self._values[next_hashvalue] = value
-                # key不存在，同时保存key和value
+                # 找到空位，key不存在，同时保存key和value
                 else:
                     self._keys[next_hashvalue] = key
                     self._values[next_hashvalue] = value
 
     def get(self, key):
-        start = self.hashfunction(key)
+        start_hash = self.hashfunction(key)
         value = None
-        stop = False
-        found = False
-        current = start
+        current_hash = start_hash
 
-        while self._keys[current] and (not found) and (not stop):
-            if self._keys[current] == key:
-                found = True
-                value = self._values[current]
+        while self._keys[current_hash]:
+            if self._keys[current_hash] == key:
+                value = self._values[current_hash]
+                break
             else:
-                current = self.rehash(current)
-                if current == start:
-                    stop = True
+                current_hash = self.rehash(current_hash)
+                if current_hash == start_hash:
+                    break
         return value
 
 

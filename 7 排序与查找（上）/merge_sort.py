@@ -11,7 +11,7 @@ def merge_sort(items):
     left = merge_sort(items[:middle])   # 左半部分排好序
     right = merge_sort(items[middle:])  # 右半部分排好序
 
-    # 合并左右部分，完成排序
+    # 合并左右部分，完成排序，在此断点调试可观察各部分返回顺序
     merged = []
     while left and right:
         if left[0] <= right[0]:
