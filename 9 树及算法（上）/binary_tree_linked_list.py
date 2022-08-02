@@ -2,29 +2,29 @@
 
 
 class BTNode:
-    def __init__(self, v):
-        self._data = v
+    def __init__(self, key):
+        self._key = key
         self._left = None
         self._right = None
 
-    def insert_left(self, v):
+    def insert_left(self, key):
         if self._left is None:
-            self._left = BTNode(v)
+            self._left = BTNode(key)
         else:
-            t = BTNode(v)
-            t._left = self._left
-            self._left = t
+            node = BTNode(key)
+            node._left = self._left
+            self._left = node
 
-    def insert_right(self, v):
+    def insert_right(self, key):
         if self._right is None:
-            self._right = BTNode(v)
+            self._right = BTNode(key)
         else:
-            t = BTNode(v)
-            t._right = self._right
-            self._right = t
+            node = BTNode(key)
+            node._right = self._right
+            self._right = node
 
     def preorder(self):
-        print(self._data)
+        print(self._key)
         if self._left:
             self._left.preorder()
         if self._right:
@@ -33,7 +33,7 @@ class BTNode:
     def inorder(self):
         if self._left:
             self._left.inorder()
-        print(self._data)
+        print(self._key)
         if self._right:
             self._right.inorder()
 
@@ -42,7 +42,7 @@ class BTNode:
             self._left.postorder()
         if self._right:
             self._right.postorder()
-        print(self._data)
+        print(self._key)
 
     @property
     def left(self):
@@ -53,12 +53,12 @@ class BTNode:
         return self._right
 
     @property
-    def data(self):
-        return self._data
+    def key(self):
+        return self._key
 
-    @data.setter
-    def data(self, v):
-        self._data = v
+    @key.setter
+    def key(self, k):
+        self._key = k
 
 
 if __name__ == '__main__':
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     r.insert_left('d')
     r.insert_right('e')
     r.insert_right('f')
-    r.right.data = 'hello'
+    r.right.key = 'hello'
     r.left.insert_right('g')
     r.preorder()
     print('-------------------------------')

@@ -71,6 +71,6 @@ class BinHeap:
 
 if __name__ == '__main__':
     bin_heap = BinHeap()
-    bin_heap.build_heap([9, 6, 5, 2, 3])
+    bin_heap.build_heap([27, 17, 33, 21, 19, 18, 14, 11, 9, 5])
     # print(bin_heap._heap_list[1:])
     print(bin_heap)

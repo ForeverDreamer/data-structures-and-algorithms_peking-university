@@ -1,56 +1,49 @@
 """{3}--603树的嵌套列表实现11m00s"""
 
 
-def binary_tree(r):
-    return [r, [], []]
+class BTNestTree:
+    def __init__(self, key):
+        self._root = [key, [], []]
 
+    def __repr__(self):
+        return str(self._root)
 
-def insert_left(root, new_branch):
-    t = root.pop(1)
-    if len(t) > 1:
-        root.insert(1, [new_branch, t, []])
-    else:
-        root.insert(1, [new_branch, [], []])
-    return root
+    def insert_left(self, key):
+        left = self._root.pop(1)
+        if len(left) > 1:
+            self._root.insert(1, [key, left, []])
+        else:
+            self._root.insert(1, [key, [], []])
+        return self._root
 
+    def insert_right(self, key):
+        right = self._root.pop(2)
+        if len(right) > 1:
+            self._root.insert(2, [key, [], right])
+        else:
+            self._root.insert(2, [key, [], []])
+        return self._root
 
-def insert_right(root, new_branch):
-    t = root.pop(2)
-    if len(t) > 1:
-        root.insert(2, [new_branch, [], t])
-    else:
-        root.insert(2, [new_branch, [], []])
-    return root
+    @property
+    def root(self):
+        return self._root
 
+    @property
+    def left_subtree(self):
+        return self._root[1]
 
-def get_root_val(root):
-    return root[0]
-
-
-def set_root_val(root, new_val):
-    root[0] = new_val
-
-
-def get_left_child(root):
-    return root[1]
-
-
-def get_right_child(root):
-    return root[2]
+    @property
+    def right_subtree(self):
+        return self._root[2]
 
 
 if __name__ == '__main__':
-    r = binary_tree(3)
-    insert_left(r, 4)
-    insert_left(r, 5)
-    insert_right(r, 6)
-    insert_right(r, 7)
-    left = get_left_child(r)
-    print(left)
+    tree = BTNestTree(3)
+    tree.insert_left(4)
+    tree.insert_left(5)
+    tree.insert_right(6)
+    tree.insert_right(7)
+    print('root:', tree.root)
+    print('left_subtree:', tree.left_subtree)
+    print('right_subtree:', tree.right_subtree)
 
-    set_root_val(left, 9)
-    print(r)
-
-    insert_left(left, 11)
-    print(r)
-    print(get_right_child(get_right_child(r)))
