@@ -20,10 +20,14 @@ def bfs(start):
 
 
 def traverse(dest):
+    path = []
     while dest.previous:
-        print(dest.key)
+        # print(dest.key)
+        path.append(dest.key)
         dest = dest.previous
-    print(dest.key)
+    path.append(dest.key)
+    path.reverse()
+    print('->'.join(path))
 
 
 if __name__ == '__main__':

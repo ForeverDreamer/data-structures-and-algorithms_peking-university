@@ -17,7 +17,7 @@ class Vertex:
     def __str__(self):
         # return str(self._key) + ' connected to: ' + str([neighbor.key for neighbor in self.connected_to])
         nbrs = [(neighbor.key, neighbor.data) for neighbor in self.connected_to]
-        return f'({self._key},{self.data}) connected to: {nbrs}'
+        return f'({self.key},{self.data}) connected to: {nbrs}'
         # neighbors = {neighbor.key: neighbor.data for neighbor in self.connected_to}
         # return f'({self._key},{self._data}) connected to: {neighbors}'
         # neighbors = [f'{neighbor.key},{neighbor.data},{neighbor.state},{neighbor.distance},{neighbor.previous}'
