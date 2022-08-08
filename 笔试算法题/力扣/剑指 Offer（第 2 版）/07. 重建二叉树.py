@@ -7,6 +7,7 @@
 
 示例 1:
 Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+# 从上到下分层打印，没有子节点用null表示
 Output: [3,9,20,null,null,15,7]
 示例 2:
 

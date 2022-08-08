@@ -39,47 +39,9 @@ def knight_graph(board_size):
     return g
 
 
-def trace_path(path):
-    p_str = []
-    for v in path:
-        p_str.extend([str(v.key), ' -> '])
-    print(f'路径长度：{len(path)-1}, 失败次数：{fail_count}')
-    print(''.join(p_str[:-1]))
-    # filename = 'kt.log'
-    # try:
-    #     os.remove(filename)
-    # except OSError:
-    #     pass
-    # with open(filename, 'at', encoding='utf-8') as wf:
-    #     wf.write(f'路径长度：{len(path)-1}, 失败次数：{fail_count}\n{"".join(p_str[:-1])}\n')
-
-
 fail_count = 0
-
-
-def knight_tour(level, path, current, limit):
-    current.state = 'gray'
-    path.append(current)
-    if level < limit:
-        neighbors = list(current.connections)
-        # 按可选择走法升序排序，即先搜索四周，再搜索中间
-        # neighbors = order_by_avail(current)
-        i = 0
-        done = False
-        while i < len(neighbors) and not done:
-            if neighbors[i].state == 'white':
-                done = knight_tour(level+1, path, neighbors[i], limit)
-            i += 1
-        # Prepare to backtrack
-        if not done:
-            global fail_count
-            fail_count += 1
-            trace_path(path)
-            path.pop()
-            current.state = 'white'
-    else:
-        done = True
-    return done
+limit = 24
+path = []
 
 
 def order_by_avail(n):
@@ -95,11 +57,51 @@ def order_by_avail(n):
     return [y[1] for y in res_list]
 
 
+def knight_tour(level, current):
+    current.state = 'gray'
+    path.append(current)
+    if level < limit:
+        neighbors = list(current.connections)
+        # 按可选择走法升序排序，即先搜索四周，再搜索中间
+        # neighbors = order_by_avail(current)
+        done = False
+        for nbr in neighbors:
+            if nbr.state == 'white':
+                done = knight_tour(level+1, nbr)
+            if done:
+                break
+        # Prepare to backtrack
+        if not done:
+            global fail_count
+            fail_count += 1
+            trace_path()
+            path.pop()
+            current.state = 'white'
+    else:
+        # 点击调用堆栈函数可查看每一步状态
+        done = True
+    return done
+
+
+def trace_path():
+    p_str = []
+    for v in path:
+        p_str.extend([str(v.key), ' -> '])
+    print(f'路径长度：{len(path)-1}, 失败次数：{fail_count}')
+    print(''.join(p_str[:-1]))
+    # filename = 'kt.log'
+    # try:
+    #     os.remove(filename)
+    # except OSError:
+    #     pass
+    # with open(filename, 'at', encoding='utf-8') as wf:
+    #     wf.write(f'路径长度：{len(path)-1}, 失败次数：{fail_count}\n{"".join(p_str[:-1])}\n')
+
+
 if __name__ == '__main__':
     kg = knight_graph(5)
     print(kg)
     print('---------------------------------')
-    p = []
     # knight_tour(0, p, kg.get_vertex('00'), 24)
     # trace_path(p)
     # print('---------------------------------')
@@ -111,9 +113,8 @@ if __name__ == '__main__':
     # knight_tour(0, p, kg.get_vertex('02'), 24)
     # trace_path(p)
     # print('---------------------------------')
-    p.clear()
-    knight_tour(0, p, kg.get_vertex('04'), 24)
-    trace_path(p)
+    knight_tour(0, kg.get_vertex('04'))
+    trace_path()
     print('---------------------------------')
     # p_str = []
     # for v in p:

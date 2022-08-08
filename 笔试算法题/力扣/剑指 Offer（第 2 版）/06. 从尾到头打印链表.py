@@ -19,13 +19,48 @@ class ListNode:
         self.next = None
 
 
+class List:
+    def __init__(self):
+        self._head = None
+
+    def __repr__(self):
+        if self._head is None:
+            return []
+        else:
+            data = []
+            current = self._head
+            while current:
+                data.append(current.val)
+                current = current.next
+            return str(data)
+
+    @property
+    def head(self):
+        return self._head
+
+    def add_node(self, node):
+        if self._head is None:
+            self._head = node
+        else:
+            node.next = self._head
+            self._head = node
+
+
 class Solution:
     def reversePrint(self, head):
         if head is None:
             return []
-        stack = [head.val]
-        next_node = head.next
-        while next_node:
-            stack.append(next_node.val)
-            next_node = next_node.next
-        return [n for n in stack[::-1]]
+        data = []
+        current = head
+        while current:
+            data.append(current.val)
+            current = current.next
+        # 逆序输出
+        return data[::-1]
+
+
+l = List()
+for i in [2, 3, 1]:
+    l.add_node(ListNode(i))
+
+print(Solution().reversePrint(l.head))

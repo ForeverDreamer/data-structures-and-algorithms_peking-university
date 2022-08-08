@@ -53,6 +53,7 @@ class Solution:
             n = matrix[i][j]
             if n == target:
                 return True
+            # 每次对比都会排除一部分元素
             elif target < n:
                 # 排除len(matrix)-i个元素
                 j -= 1
@@ -70,3 +71,4 @@ m = [
   [18, 21, 23, 26, 30]
 ]
 print(Solution().findNumberIn2DArray(m, 17))
+print(Solution().findNumberIn2DArray(m, 99))
