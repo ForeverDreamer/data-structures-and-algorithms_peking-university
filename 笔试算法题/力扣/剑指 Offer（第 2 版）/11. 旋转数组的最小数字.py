@@ -20,8 +20,10 @@ class Solution:
         while left < right:
             mid = left + (right - left) // 2
             if numbers[mid] < numbers[right]:
+                # mid有可能是最小值，不能排除
                 right = mid
             elif numbers[mid] > numbers[right]:
+                # mid一定不是最小值，可以排除
                 left = mid + 1
             else:
                 right -= 1

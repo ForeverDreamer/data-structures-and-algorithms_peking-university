@@ -82,20 +82,20 @@ public class Solution {
 
 
 class Solution:
-    def numWays(self, n: int) -> int:
-        if n == 0 or n == 1:
-            return 1
-        pre = 1
-        cur = 2
-        for _ in range(3, n+1):
-            pre, cur = cur, (pre + cur)
-        return cur % 1000000007
+    # def numWays(self, n: int) -> int:
+    #     if n == 0 or n == 1:
+    #         return 1
+    #     pre = 1
+    #     cur = 2
+    #     for _ in range(3, n+1):
+    #         pre, cur = cur, (pre + cur)
+    #     return cur % 1000000007
 
-        # def numWays(self, n: int) -> int:
-        #     a, b = 1, 1
-        #     for _ in range(n):
-        #         a, b = b, a + b
-        #     return a % 1000000007
+    def numWays(self, n: int) -> int:
+        n0, n1 = 1, 1
+        for _ in range(n):
+            n0, n1 = n1, n0 + n1
+        return n0 % 1000000007
 
 
 print(Solution().numWays(3))

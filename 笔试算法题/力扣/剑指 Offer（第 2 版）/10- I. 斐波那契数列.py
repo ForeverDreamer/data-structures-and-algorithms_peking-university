@@ -39,10 +39,10 @@ class Solution:
     #     return r
 
     def fib(self, n: int) -> int:
-        a, b = 0, 1
+        n0, n1 = 0, 1
         for _ in range(n):
-            a, b = b, a + b
-        return a % 1000000007
+            n0, n1 = n1, n0 + n1
+        return n0 % 1000000007
 
 
 s = Solution()

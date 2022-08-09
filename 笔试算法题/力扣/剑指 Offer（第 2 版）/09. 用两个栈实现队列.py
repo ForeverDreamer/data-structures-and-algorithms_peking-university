@@ -34,7 +34,6 @@ class CQueue:
     def appendTail(self, value: int) -> None:
         self._stack1.append(value)
 
-
     def deleteHead(self) -> int:
         if len(self._stack2) > 0:
             return self._stack2.pop()
