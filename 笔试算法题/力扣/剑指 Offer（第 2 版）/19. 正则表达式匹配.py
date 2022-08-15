@@ -75,7 +75,7 @@ class Solution:
                     # 默认匹配0次
                     f[i][j] = f[i][j-2]
                     if matches(i, j-1):
-                        # 可以选择匹配1次，即可以选择f[i][j-2] or f[i-1][j]
+                        # 匹配0次或1次任一种情况为True当前就为True，即可以选择f[i][j-2] or f[i-1][j]
                         f[i][j] |= f[i-1][j]
                 else:
                     if matches(i, j):
