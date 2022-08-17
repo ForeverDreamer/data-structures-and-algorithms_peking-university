@@ -36,11 +36,11 @@ from utils import TreeNode
 
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
-        def recur(L, R):
-            if not L and not R:
+        def equal(node1, node2):
+            if not node1 and not node2:
                 return True
-            if not L or not R or L.val != R.val:
+            if not node1 or not node2 or node1.val != node2.val:
                 return False
-            return recur(L.left, R.right) and recur(L.right, R.left)
+            return equal(node1.left, node2.right) and equal(node1.right, node2.left)
 
-        return recur(root.left, root.right) if root else True
+        return equal(root.left, root.right) if root else True

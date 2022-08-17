@@ -21,6 +21,9 @@ class TreeNode:
         self.left = None
         self.right = None
 
+    def __repr__(self):
+        return str(self.val)
+
 
 class Tree:
     def __init__(self, nums):
