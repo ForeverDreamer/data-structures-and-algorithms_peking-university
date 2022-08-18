@@ -28,7 +28,7 @@ class MinStack:
 
     def push(self, x: int) -> None:
         self.A.append(x)
-        if not self.B or self.B[-1] >= x:
+        if not self.B or x <= self.B[-1]:
             self.B.append(x)
 
     def pop(self) -> None:

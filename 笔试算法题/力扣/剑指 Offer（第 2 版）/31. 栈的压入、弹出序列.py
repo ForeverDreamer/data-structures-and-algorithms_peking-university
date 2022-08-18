@@ -32,3 +32,6 @@ class Solution:
                 i += 1
         return not stack
 
+
+print(Solution().validateStackSequences([1, 2, 3, 4, 5], [4, 5, 3, 2, 1]))
+print(Solution().validateStackSequences([1, 2, 3, 4, 5], [4, 3, 5, 1, 2]))
