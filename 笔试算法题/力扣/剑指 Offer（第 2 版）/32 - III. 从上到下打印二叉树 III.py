@@ -32,7 +32,8 @@ class Solution:
         res, deque = [], collections.deque([root])
         while deque:
             tmp = collections.deque()
-            for _ in range(len(deque)):
+            length = len(deque)
+            for _ in range(length):
                 node = deque.popleft()
                 if len(res) % 2:
                     tmp.appendleft(node.val)  # 偶数层 -> 队列头部

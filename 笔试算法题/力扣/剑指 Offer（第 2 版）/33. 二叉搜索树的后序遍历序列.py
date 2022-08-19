@@ -26,18 +26,18 @@
 
 class Solution:
     def verifyPostorder(self, postorder: [int]) -> bool:
-        def recur(i, j):
-            if i >= j:
+        def _verify(start, root):
+            if start >= root:
                 return True
-            p = i
-            while postorder[p] < postorder[j]:
-                p += 1
-            m = p
-            while postorder[p] > postorder[j]:
-                p += 1
-            return p == j and recur(i, m - 1) and recur(m, j - 1)
+            i = start
+            while postorder[i] < postorder[root]:
+                i += 1
+            left_root = i - 1
+            while postorder[i] > postorder[root]:
+                i += 1
+            return i == root and _verify(start, left_root) and _verify(left_root+1, root-1)
 
-        return recur(0, len(postorder) - 1)
+        return _verify(0, len(postorder) - 1)
 
 
 print(Solution().verifyPostorder([1, 3, 2, 6, 5]))

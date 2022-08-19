@@ -22,10 +22,10 @@
 -1000 <= Node.val <= 1000
 -1000 <= targetSum <= 1000
 """
-
+from utils import TreeNode, Tree
 
 class Solution:
-    def pathSum(self, root, target):
+    def pathSum(self, root: TreeNode, target: int):
         res, path = [], []
         def recur(root, tar):
             if not root:
@@ -40,3 +40,7 @@ class Solution:
 
         recur(root, target)
         return res
+
+
+# 需要调一下，Tree实现有问题
+print(Solution().pathSum(Tree([5, 4, 8, 11, None, 13, 4, 7, 2, 5, 1]).root, 22))
