@@ -43,4 +43,4 @@ class Solution:
 
 
 # 需要调一下，Tree实现有问题
-print(Solution().pathSum(Tree([5, 4, 8, 11, None, 13, 4, 7, 2, 5, 1]).root, 22))
+print(Solution().pathSum(Tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1]).root, 22))
