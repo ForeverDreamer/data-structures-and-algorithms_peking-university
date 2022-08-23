@@ -30,10 +30,16 @@ class Solution:
         def recur(root, tar):
             if not root:
                 return
-            path.append(root.val)
             tar -= root.val
-            if tar == 0 and not root.left and not root.right:
-                res.append(list(path))
+            if tar < 0:
+                return
+            if tar == 0:
+                if not root.left and not root.right:
+                    path.append(root.val)
+                    res.append(list(path))
+                    path.pop()
+                return
+            path.append(root.val)
             recur(root.left, tar)
             recur(root.right, tar)
             path.pop()
