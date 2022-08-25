@@ -17,9 +17,24 @@
 
 class Solution:
     def maxSubArray(self, nums) -> int:
+        dp = [nums[0]]
+        array = [nums[0]]
         for i in range(1, len(nums)):
-            nums[i] += max(nums[i - 1], 0)
-        return max(nums)
+            if dp[i-1] > 0:
+                dp.append(nums[i] + dp[i-1])
+                array.append(nums[i-1])
+            else:
+                dp.append(nums[i])
+                array.append(None)
+        # for i in range(1, len(nums)):
+        #     nums[i] += max(nums[i - 1], 0)
+        _max = max(dp)
+        i = dp.index(_max)
+        arr = [array[i+1]]
+        while i >= 0 and array[i]:
+            arr.append(array[i])
+            i -= 1
+        return _max, array[dp.index(_max)]
 
 
 print(Solution().maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))

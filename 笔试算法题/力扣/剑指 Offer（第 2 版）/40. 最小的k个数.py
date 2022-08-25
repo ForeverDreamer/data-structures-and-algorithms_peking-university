@@ -19,5 +19,6 @@
 
 class Solution:
     def getLeastNumbers(self, arr, k):
+        # 如果不让使用库函数就只能手写快速排序算法
         arr.sort()
         return arr[:k]

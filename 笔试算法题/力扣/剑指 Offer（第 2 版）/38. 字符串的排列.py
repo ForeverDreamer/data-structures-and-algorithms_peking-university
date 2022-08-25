@@ -16,7 +16,7 @@
 class Solution:
     def permutation(self, s: str):
         all_chars, res = list(s), []
-        def dfs(pos):
+        def search_seqs(pos):
             if pos == len(all_chars) - 1:
                 res.append(''.join(all_chars))   # 添加排列方案
                 return
@@ -27,12 +27,12 @@ class Solution:
                 pos_chars.add(all_chars[i])
                 if i != pos:
                     all_chars[i], all_chars[pos] = all_chars[pos], all_chars[i]  # 交换，将 c[i] 固定在第 x 位
-                dfs(pos+1)               # 开启固定第 x + 1 位字符
+                search_seqs(pos+1)               # 开启固定第 x + 1 位字符
                 if i != pos:
                     all_chars[i], all_chars[pos] = all_chars[pos], all_chars[i]  # 恢复交换
-        dfs(0)
+        search_seqs(0)
         return res
 
 
-print(Solution().permutation('abc'))
-print(Solution().permutation('abb'))
+print(Solution().permutation('abcde'))
+print(Solution().permutation('abbce'))
