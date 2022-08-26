@@ -41,3 +41,10 @@ class Solution:
             for j in range(1, n):
                 grid[i][j] += max(grid[i][j - 1], grid[i - 1][j])
         return grid[-1][-1]
+
+
+print(Solution().maxValue([
+    [1, 3, 1],
+    [1, 5, 1],
+    [4, 2, 1]
+]))

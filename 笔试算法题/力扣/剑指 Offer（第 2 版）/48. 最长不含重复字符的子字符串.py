@@ -24,13 +24,13 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         dic = {}
-        res = tmp = 0
+        _max = pre = 0
         for j in range(len(s)):
             i = dic.get(s[j], -1)  # 获取索引 i
             dic[s[j]] = j  # 更新哈希表
-            tmp = tmp + 1 if tmp < j - i else j - i  # dp[j - 1] -> dp[j]
-            res = max(res, tmp)  # max(dp[j - 1], dp[j])
-        return res
+            pre = pre + 1 if pre < j - i else j - i
+            _max = max(_max, pre)
+        return _max
 
 
 print(Solution().lengthOfLongestSubstring('abcabcbb'))
