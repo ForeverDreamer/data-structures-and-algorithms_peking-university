@@ -40,11 +40,14 @@
 class Solution:
     def kthLargest(self, root, k: int) -> int:
         def dfs(root):
-            if not root: return
+            if not root:
+                return
             dfs(root.right)
-            if self.k == 0: return
+            if self.k == 0:
+                return
             self.k -= 1
-            if self.k == 0: self.res = root.val
+            if self.k == 0:
+                self.res = root.val
             dfs(root.left)
 
         self.k = k

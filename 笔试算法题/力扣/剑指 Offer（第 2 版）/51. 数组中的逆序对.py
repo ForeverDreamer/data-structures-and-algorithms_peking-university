@@ -47,3 +47,6 @@ class Solution:
 
         tmp = [0] * len(nums)
         return merge_sort(0, len(nums) - 1)
+
+
+print(Solution().reversePairs([7, 3, 2, 6, 0, 1, 5, 4]))
