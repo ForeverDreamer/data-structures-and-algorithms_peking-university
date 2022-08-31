@@ -48,6 +48,7 @@ class Solution:
             self.k -= 1
             if self.k == 0:
                 self.res = root.val
+                return
             dfs(root.left)
 
         self.k = k

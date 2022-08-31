@@ -46,3 +46,6 @@ class Solution:
             if i >= 0:
                 res.append(deque[0])
         return res
+
+
+print(Solution().maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
