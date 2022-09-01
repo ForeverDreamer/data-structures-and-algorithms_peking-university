@@ -47,7 +47,8 @@ class MaxQueue:
         self.deque.append(value)
 
     def pop_front(self) -> int:
-        if self.queue.empty(): return -1
+        if self.queue.empty():
+            return -1
         val = self.queue.get()
         if val == self.deque[0]:
             self.deque.popleft()

@@ -35,3 +35,6 @@ class Solution:
             cost = min(cost, price)
             profit = max(profit, price - cost)
         return profit
+
+
+print(Solution().maxProfit([7, 1, 5, 3, 6, 4]))
