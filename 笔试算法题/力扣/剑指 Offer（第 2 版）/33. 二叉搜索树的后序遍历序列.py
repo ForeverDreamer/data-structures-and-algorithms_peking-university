@@ -30,11 +30,14 @@ class Solution:
             if start >= root:
                 return True
             i = start
+            # 跳过左子树
             while postorder[i] < postorder[root]:
                 i += 1
             left_root = i - 1
+            # 跳过右子树
             while postorder[i] > postorder[root]:
                 i += 1
+            # 判断最后剩下的是不是根节点，递归验证左子树和右子树
             return i == root and _verify(start, left_root) and _verify(left_root+1, root-1)
 
         return _verify(0, len(postorder) - 1)

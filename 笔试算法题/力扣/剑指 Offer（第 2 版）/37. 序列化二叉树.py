@@ -7,9 +7,11 @@ import collections
 
 from utils import TreeNode
 
+
 class Codec:
     def serialize(self, root):
-        if not root: return "[]"
+        if not root:
+            return "[]"
         queue = collections.deque()
         queue.append(root)
         res = []
@@ -19,11 +21,13 @@ class Codec:
                 res.append(str(node.val))
                 queue.append(node.left)
                 queue.append(node.right)
-            else: res.append("null")
+            else:
+                res.append("null")
         return '[' + ','.join(res) + ']'
 
     def deserialize(self, data):
-        if data == "[]": return
+        if data == "[]":
+            return
         vals, i = data[1:-1].split(','), 1
         root = TreeNode(int(vals[0]))
         queue = collections.deque()

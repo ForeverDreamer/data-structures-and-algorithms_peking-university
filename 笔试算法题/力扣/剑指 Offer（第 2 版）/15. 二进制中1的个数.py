@@ -26,11 +26,11 @@
 
 class Solution:
     def hammingWeight(self, n: int) -> int:
-        res = 0
+        counter = 0
         while n > 0:
-            res += n & 1
+            counter += n & 1
             n >>= 1
-        return res
+        return counter
 
 
 print(Solution().hammingWeight(0b00000000000000000000000000001011))
