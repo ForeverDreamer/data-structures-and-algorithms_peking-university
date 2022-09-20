@@ -28,11 +28,14 @@ class Solution:
     def hammingWeight(self, n: int) -> int:
         counter = 0
         while n > 0:
+            print(f'{bin(n)}({hex(n)}, {oct(n)})')
             counter += n & 1
             n >>= 1
         return counter
 
 
 print(Solution().hammingWeight(0b00000000000000000000000000001011))
+print('===========================================================')
 print(Solution().hammingWeight(0b00000000000000000000000010000000))
+print('===========================================================')
 print(Solution().hammingWeight(0b11111111111111111111111111111101))
