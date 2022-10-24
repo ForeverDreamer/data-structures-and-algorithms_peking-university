@@ -17,22 +17,19 @@
 
 import collections
 
-# class Solution:
-#     def firstUniqChar(self, s: str) -> str:
-#         dic = {}
-#         for c in s:
-#             dic[c] = c not in dic
-#         for c in s:
-#             if dic[c]: return c
-#         return ' '
-
 
 class Solution:
     def firstUniqChar(self, s: str) -> str:
         dic = collections.OrderedDict()
         for c in s:
-            dic[c] = c not in dic
+            if c in dic:
+                dic[c] += 1
+            else:
+                dic[c] = 1
         for k, v in dic.items():
-            if v:
+            if v == 1:
                 return k
         return ' '
+
+
+print(Solution().firstUniqChar("abaccdeff"))

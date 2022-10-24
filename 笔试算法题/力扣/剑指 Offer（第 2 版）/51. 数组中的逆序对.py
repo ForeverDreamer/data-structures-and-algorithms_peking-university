@@ -33,12 +33,15 @@ class Solution:
             i, j = l, m + 1
             tmp[l:r + 1] = nums[l:r + 1]
             for k in range(l, r + 1):
+                # 无逆序对
                 if i == m + 1:
                     nums[k] = tmp[j]
                     j += 1
+                # 无逆序对
                 elif j == r + 1 or tmp[i] <= tmp[j]:
                     nums[k] = tmp[i]
                     i += 1
+                # 统计逆序对
                 else:
                     nums[k] = tmp[j]
                     j += 1

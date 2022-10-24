@@ -16,7 +16,7 @@
 
 
 class Solution:
-    def maxSubArray(self, nums) -> int:
+    def maxSubArray(self, nums):
         dp = [nums[0]]
         continuous = [False]
         for i in range(1, len(nums)):
