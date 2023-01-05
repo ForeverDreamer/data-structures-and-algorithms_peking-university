@@ -16,13 +16,13 @@ class List:
 
 # Definition for a binary tree node.
 class TreeNode:
-    def __init__(self, x):
-        self.val = x
+    def __init__(self, key):
+        self.key = key
         self.left = None
         self.right = None
 
     def __repr__(self):
-        return str(self.val)
+        return str(self.key)
 
 
 class Tree:

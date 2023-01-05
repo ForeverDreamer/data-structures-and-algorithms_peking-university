@@ -44,7 +44,8 @@ Output: [-1]
 这样以来，我们就知道了左子树的前序遍历和中序遍历结果，以及右子树的前序遍历和中序遍历结果，我们就可以递归地对构造出左子树和右子树，再将这两颗子树接到根节点的左右位置。
 
 细节
-在中序遍历中对根节点进行定位时，一种简单的方法是直接扫描整个中序遍历的结果并找出根节点，但这样做的时间复杂度较高。我们可以考虑使用哈希表来帮助我们快速地定位根节点。对于哈希映射中的每个键值对，键表示一个元素（节点的值），值表示其在中序遍历中的出现位置。在构造二叉树的过程之前，我们可以对中序遍历的列表进行一遍扫描，就可以构造出这个哈希映射。在此后构造二叉树的过程中，我们就只需要 O(1) 的时间对根节点进行定位了
+在中序遍历中对根节点进行定位时，一种简单的方法是直接扫描整个中序遍历的结果并找出根节点，但这样做的时间复杂度较高。我们可以考虑使用哈希表来帮助我们快速地定位根节点。
+对于哈希映射中的每个键值对，键表示一个元素（节点的值），值表示其在中序遍历中的出现位置。在构造二叉树的过程之前，我们可以对中序遍历的列表进行一遍扫描，就可以构造出这个哈希映射。在此后构造二叉树的过程中，我们就只需要 O(1) 的时间对根节点进行定位了
                                                前序结果            中序结果
                                          [3, 9, 20, 15, 7], [9, 3, 15, 20, 7]
                                                             根节点(3)
@@ -61,35 +62,32 @@ from utils import TreeNode
 class Solution:
     def buildTree(self, preorder, inorder):
         # left和right均包含首尾元素
-        def myBuildTree(preorder_left: int, preorder_right: int, inorder_left: int, inorder_right: int):
-            if preorder_left > preorder_right:
+        def rebuild(idx_pl, idx_pr, idx_il, idx_ir):
+            if idx_pl > idx_pr:
                 return None
             # 前序遍历中的第一个节点就是根节点
-            preorder_root = preorder_left
+            idx_p_root = idx_pl
             # 在中序遍历中定位根节点
-            inorder_root = index[preorder[preorder_root]]
-
+            idx_i_root = idx_dic[preorder[idx_p_root]]
             # 先把根节点建立出来
-            root = TreeNode(preorder[preorder_root])
-            # 得到左子树中的节点数目
-            size_left_subtree = inorder_root - inorder_left
+            root = TreeNode(preorder[idx_p_root])
+            # 根节点左边都是左子树节点，右边都是右子树节点，根据中序遍历结果根节点的位置计算出左子树的节点数量
+            size_left = idx_i_root - idx_il
             # 递归地构造左子树，并连接到根节点
             # 左子树数据：前序遍历中「从 左边界+1 开始的 size_left_subtree」个元素就对应了中序遍历中「从 左边界 开始到 根节点定位-1」的元素
-            root.left = myBuildTree(preorder_left + 1, preorder_left + size_left_subtree, inorder_left,
-                                    inorder_root - 1)
+            root.left = rebuild(idx_pl + 1, idx_pl + size_left, idx_il, idx_i_root - 1)
             # 递归地构造右子树，并连接到根节点
             # 右子树数据：前序遍历中「从 左边界+1+左子树节点数目 开始到 右边界」的元素就对应了中序遍历中「从 根节点定位+1 到 右边界」的元素
-            root.right = myBuildTree(preorder_left + size_left_subtree + 1, preorder_right, inorder_root + 1,
-                                     inorder_right)
+            root.right = rebuild(idx_pl + size_left + 1, idx_pr, idx_i_root + 1, idx_ir)
             return root
 
-        n = len(preorder)
+        idx_pl = 0
+        idx_pr = len(preorder) - 1
+        idx_il = 0
+        idx_ir = len(inorder) - 1
         # 构造哈希映射，帮助我们快速定位根节点
-        index = {element: i for i, element in enumerate(inorder)}
-        return myBuildTree(0, n - 1, 0, n - 1)
+        idx_dic = {element: i for i, element in enumerate(inorder)}
+        return rebuild(idx_pl, idx_pr, idx_il, idx_ir)
 
 
 print(Solution().buildTree(preorder=[3, 9, 20, 15, 7], inorder=[9, 3, 15, 20, 7]))
-
-
-
