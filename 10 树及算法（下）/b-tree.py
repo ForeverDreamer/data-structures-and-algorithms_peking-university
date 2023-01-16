@@ -3,105 +3,95 @@ import random
 
 # 视频著名代码出处，尊重别人劳动成果：https://www.programiz.com/dsa/b-tree
 
+
 # Create a node
 class BTreeNode:
     def __init__(self, leaf=False):
         self.leaf = leaf
         self.keys = []
-        self.child = []
+        self.children = []
 
 
 # Tree
 class BTree:
-    def __init__(self, t):
+    def __init__(self, order):
         self.root = BTreeNode(True)
-        self.t = t
-
-        # Insert node
+        self.order = order
 
     def insert(self, k):
         root = self.root
-        if len(root.keys) == (2 * self.t) - 1:
-            temp = BTreeNode()
-            self.root = temp
-            temp.child.insert(0, root)
-            self.split_child(temp, 0)
-            self.insert_non_full(temp, k)
+        # 根节点满了，分裂节点，树的高度加1
+        if len(root.keys) == self.order - 1:
+            new_root = BTreeNode()
+            self.root = new_root
+            new_root.children.insert(0, root)
+            self.split_children(new_root, 0)
+            self.insert_non_full(new_root, k)
         else:
             self.insert_non_full(root, k)
 
-        # Insert nonfull
-
-    def insert_non_full(self, x, k):
-        i = len(x.keys) - 1
-        if x.leaf:
-            x.keys.append((None, None))
-            # 插入排序的算法，比新K大的都往后移动
-            while i >= 0 and k[0] < x.keys[i][0]:
-                x.keys[i + 1] = x.keys[i]
+    def insert_non_full(self, node, k):
+        i = len(node.keys) - 1
+        if node.leaf:
+            node.keys.append((None, None))
+            # 插入排序的算法，比新k大的都往后移动
+            while i >= 0 and k[0] < node.keys[i][0]:
+                node.keys[i + 1] = node.keys[i]
                 i -= 1
             # 新k插入到合适的位置
-            x.keys[i + 1] = k
+            node.keys[i + 1] = k
         else:
-            # 对当前节点的keys从左往右遍历查找新k合适的位置
-            while i >= 0 and k[0] < x.keys[i][0]:
+            # 对当前节点的keys从右往左遍历查找新k合适的位置
+            while i >= 0 and k[0] < node.keys[i][0]:
                 i -= 1
             i += 1
-            # 当前节点满员就先分裂当前节点
-            if len(x.child[i].keys) == (2 * self.t) - 1:
-                self.split_child(x, i)
-                if k[0] > x.keys[i][0]:
+            # 当前节点满了就先分裂当前节点
+            if len(node.children[i].keys) == self.order - 1:
+                self.split_children(node, i)
+                if k[0] > node.keys[i][0]:
                     i += 1
-            self.insert_non_full(x.child[i], k)
-
-        # Split the child
+            self.insert_non_full(node.children[i], k)
 
     # 以中间节点为中心把当前keys分为左中右三部分，中间部分即中间节点向上插入父节点，左右部分各自分裂成独立的左右节点
-    #
-    def split_child(self, x, i):
-        t = self.t
-        y = x.child[i]
-        z = BTreeNode(y.leaf)
-        x.child.insert(i + 1, z)
-        x.keys.insert(i, y.keys[t - 1])
-        z.keys = y.keys[t: (2 * t) - 1]
-        y.keys = y.keys[0: t - 1]
-        # 如果是不是叶节点，还要把子节点分裂成左右两部分
-        if not y.leaf:
-            z.child = y.child[t: 2 * t]
-            y.child = y.child[0: t - 1]
+    def split_children(self, node, i):
+        order = self.order
+        mid = order // 2
+        child = node.children[i]
+        new_child = BTreeNode(child.leaf)
+        node.children.insert(i+1, new_child)
+        node.keys.insert(i, child.keys[mid-1])
+        new_child.keys = child.keys[mid:order-1]
+        child.keys = child.keys[0:mid-1]
+        # 如果不是叶节点，还要把子节点分裂成左右两部分
+        if not child.leaf:
+            new_child.children = child.children[mid:order]
+            child.children = child.children[0:mid]
 
-    # Print the tree
-    def print_tree(self, x, l=0):
-        print("Level ", l, " ", len(x.keys), end=":")
-        for i in x.keys:
-            print(i, end=" ")
-        print()
-        l += 1
-        if len(x.child) > 0:
-            for i in x.child:
-                self.print_tree(i, l)
+    def print_tree(self, node, level=0):
+        print("Level", level, end=": ")
+        print([key[0] for key in node.keys])
+        level += 1
+        if len(node.children) > 0:
+            for i in node.children:
+                self.print_tree(i, level)
 
-    # Search key in the tree
-    def search_key(self, k, x=None):
-        if x is not None:
+    def search_key(self, k, node=None):
+        if node is not None:
             i = 0
-            while i < len(x.keys) and k > x.keys[i][0]:
+            while i < len(node.keys) and k > node.keys[i][0]:
                 i += 1
-            if i < len(x.keys) and k == x.keys[i][0]:
-                return (x, i)
-            elif x.leaf:
+            if i < len(node.keys) and k == node.keys[i][0]:
+                return node, i
+            elif node.leaf:
                 return None
             else:
-                return self.search_key(k, x.child[i])
-
+                return self.search_key(k, node.children[i])
         else:
             return self.search_key(k, self.root)
 
 
 def main():
-    B = BTree(2)
-
+    b_tree = BTree(4)
     # for i in range(10):
     #     B.insert((i, 2 * i))
     # keys = [1, 2, 5, 6, 7, 9, 12, 16, 17, 18, 19, 20, 21]
@@ -110,11 +100,11 @@ def main():
     # keys = [18, 16, 7, 5, 6, 1, 12, 21, 2, 9, 17]
     keys = [21, 17, 19, 1, 20, 9, 16, 2, 6, 12, 18, 5, 7]
     for k in keys:
-        B.insert((k, 2 * k))
+        b_tree.insert((k, 2 * k))
 
-    B.print_tree(B.root)
+    b_tree.print_tree(b_tree.root)
 
-    if B.search_key(18) is not None:
+    if b_tree.search_key(18) is not None:
         print("\nFound")
     else:
         print("\nNot Found")
