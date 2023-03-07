@@ -29,7 +29,7 @@ class Solution:
         counter = 0
         while n > 0:
             print(f'{bin(n)}({hex(n)}, {oct(n)})')
-            counter += n & 1
+            counter += n & 1  # 例如：0b1011 & 0b0001，左边全部被置零，只剩最右边1位有效
             n >>= 1
         return counter
 

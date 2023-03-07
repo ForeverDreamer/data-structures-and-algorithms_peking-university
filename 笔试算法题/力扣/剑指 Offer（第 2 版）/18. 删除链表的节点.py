@@ -36,6 +36,8 @@ class Solution:
 
         if cur:
             pre.next = cur.next
+        else:
+            raise ValueError('Not Found')
 
         return head
 

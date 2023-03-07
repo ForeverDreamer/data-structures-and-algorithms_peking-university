@@ -30,7 +30,7 @@
 
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        # 提交会超时
+        # 提交会超时，但能得一些分
         # res = 1
         # if n < 0:
         #     base = 1/x
