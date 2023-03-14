@@ -5,8 +5,8 @@
 
 # Definition for a Node.
 class Node:
-    def __init__(self, val):
-        self.val = val
+    def __init__(self, key):
+        self.key = key
         self.next = None
         self.random = None
 
@@ -14,7 +14,7 @@ class Node:
         values = []
         cur = self
         while cur:
-            values.append(f'{cur.val}->(next:{cur.next.val if cur.next else None}, random:{cur.random.val if cur.random else None})')
+            values.append(f'{cur.key}->(next:{cur.next.key if cur.next else None}, random:{cur.random.key if cur.random else None})')
             cur = cur.next
         return str(values)
 
@@ -49,7 +49,7 @@ class Solution:
         # 3. 复制各节点，并建立 “原节点 -> 新节点” 的 Map 映射(链表节点全部确定下来才知道random指向哪个节点)
         cur = head
         while cur:
-            dic[cur] = Node(cur.val)
+            dic[cur] = Node(cur.key)
             cur = cur.next
         cur = head
         # 4. 构建新节点的 next 和 random 指向

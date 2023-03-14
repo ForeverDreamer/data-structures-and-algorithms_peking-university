@@ -27,15 +27,16 @@ from utils import TreeNode, Tree
 class Solution:
     def pathSum(self, root: TreeNode, target: int):
         res, path = [], []
-        def recur(root, tar):
-            if not root:
+
+        def recur(_root, tar):
+            if not _root:
                 return
-            path.append(root.val)
-            tar -= root.val
-            if tar == 0 and not root.left and not root.right:
+            path.append(_root.key)
+            tar -= _root.key
+            if tar == 0 and not _root.left and not _root.right:
                 res.append(list(path))
-            recur(root.left, tar)
-            recur(root.right, tar)
+            recur(_root.left, tar)
+            recur(_root.right, tar)
             path.pop()
 
         recur(root, target)
