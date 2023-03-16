@@ -1,3 +1,5 @@
+import collections
+
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -53,6 +55,30 @@ class Tree:
                     tmp_parents.append(parent.right)
                 j += 2
             parents = tmp_parents
+            i += 1
+
+    @property
+    def root(self):
+        return self._root
+
+
+class TreeDeserialize:
+    def __init__(self, data):
+        if data == "[]":
+            return
+        vals, i = data[1:-1].split(','), 1
+        self._root = TreeNode(int(vals[0]))
+        queue = collections.deque()
+        queue.append(self._root)
+        while queue:
+            node = queue.popleft()
+            if vals[i] != "null":
+                node.left = TreeNode(int(vals[i]))
+                queue.append(node.left)
+            i += 1
+            if vals[i] != "null":
+                node.right = TreeNode(int(vals[i]))
+                queue.append(node.right)
             i += 1
 
     @property

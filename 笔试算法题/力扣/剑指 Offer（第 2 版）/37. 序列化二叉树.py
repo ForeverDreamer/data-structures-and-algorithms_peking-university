@@ -5,7 +5,7 @@
 
 import collections
 
-from utils import TreeNode
+from utils import TreeNode, TreeDeserialize
 
 
 class Codec:
@@ -18,7 +18,7 @@ class Codec:
         while queue:
             node = queue.popleft()
             if node:
-                res.append(str(node.val))
+                res.append(str(node.key))
                 queue.append(node.left)
                 queue.append(node.right)
             else:
@@ -43,3 +43,10 @@ class Codec:
                 queue.append(node.right)
             i += 1
         return root
+
+
+print(
+    Codec().serialize(
+        TreeDeserialize('[1,2,3,null,null,4,5,null,null,null,null]').root
+    )
+)

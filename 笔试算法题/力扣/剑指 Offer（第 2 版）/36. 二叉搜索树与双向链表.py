@@ -28,7 +28,7 @@ class Solution:
                 pre.right, cur.left = cur, pre
             else:  # 记录头节点
                 head = cur
-            pre = cur  # 更新cur
+            pre = cur  # 更新pre
             dfs(cur.right)  # 递归右子树
 
         if not root:
