@@ -42,29 +42,29 @@
 
 
 # 方法一：后序遍历 + 剪枝 （从底至顶）
-class Solution:
-    def isBalanced(self, root) -> bool:
-        def recur(root):
-            if not root:
-                return 0
-            h_left = recur(root.left)
-            if h_left == -1:
-                return -1
-            h_right = recur(root.right)
-            if h_right == -1:
-                return -1
-            return max(h_left, h_right) + 1 if abs(h_left - h_right) <= 1 else -1
-
-        return recur(root) != -1
+# class Solution:
+#     def isBalanced(self, root) -> bool:
+#         def recur(root):
+#             if not root:
+#                 return 0
+#             h_left = recur(root.left)
+#             if h_left == -1:
+#                 return -1
+#             h_right = recur(root.right)
+#             if h_right == -1:
+#                 return -1
+#             return max(h_left, h_right) + 1 if abs(h_left - h_right) <= 1 else -1
+#
+#         return recur(root) != -1
 
 
 # 方法二：先序遍历 + 判断深度 （从顶至底）
-# class Solution:
-#     def isBalanced(self, root) -> bool:
-#         if not root: return True
-#         return abs(self.depth(root.left) - self.depth(root.right)) <= 1 and \
-#             self.isBalanced(root.left) and self.isBalanced(root.right)
-#
-#     def depth(self, root):
-#         if not root: return 0
-#         return max(self.depth(root.left), self.depth(root.right)) + 1
+class Solution:
+    def isBalanced(self, root) -> bool:
+        if not root: return True
+        return abs(self.depth(root.left) - self.depth(root.right)) <= 1 and \
+            self.isBalanced(root.left) and self.isBalanced(root.right)
+
+    def depth(self, root):
+        if not root: return 0
+        return max(self.depth(root.left), self.depth(root.right)) + 1

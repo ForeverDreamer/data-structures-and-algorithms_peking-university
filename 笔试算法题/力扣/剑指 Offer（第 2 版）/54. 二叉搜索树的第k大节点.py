@@ -35,7 +35,7 @@
 链接：https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
-
+from utils import TreeDeserialize
 
 class Solution:
     def kthLargest(self, root, k: int) -> int:
@@ -47,10 +47,13 @@ class Solution:
                 return
             self.k -= 1
             if self.k == 0:
-                self.res = root.val
+                self.res = root.key
                 return
             dfs(root.left)
 
         self.k = k
         dfs(root)
         return self.res
+
+
+print(Solution().kthLargest(TreeDeserialize('[5,3,6,2,4,null,null,1,null,null,null,null,null]').root, 3))

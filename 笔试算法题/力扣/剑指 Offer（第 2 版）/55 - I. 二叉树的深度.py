@@ -17,26 +17,31 @@
 节点总数 <= 10000
 """
 
-
-# class Solution:
-#     def maxDepth(self, root) -> int:
-#         if not root:
-#             return 0
-#         return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+from utils import TreeDeserialize
 
 
 class Solution:
     def maxDepth(self, root) -> int:
         if not root:
             return 0
-        queue, res = [root], 0
-        while queue:
-            tmp = []
-            for node in queue:
-                if node.left:
-                    tmp.append(node.left)
-                if node.right:
-                    tmp.append(node.right)
-            queue = tmp
-            res += 1
-        return res
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+
+
+# class Solution:
+#     def maxDepth(self, root) -> int:
+#         if not root:
+#             return 0
+#         queue, res = [root], 0
+#         while queue:
+#             tmp = []
+#             for node in queue:
+#                 if node.left:
+#                     tmp.append(node.left)
+#                 if node.right:
+#                     tmp.append(node.right)
+#             queue = tmp
+#             res += 1
+#         return res
+
+
+print(Solution().maxDepth(TreeDeserialize('[3,9,20,null,null,15,7,null,null,null,null]').root))
